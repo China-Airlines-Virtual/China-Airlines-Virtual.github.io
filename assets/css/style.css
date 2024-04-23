@@ -676,7 +676,7 @@ section {
 
 .why-us .content .more-btn {
   display: inline-block;
-  background: rgba(255, 255, 255, 0.2);
+  background: #ED1556;
   padding: 6px 30px 8px 30px;
   color: #fff;
   border-radius: 50px;
@@ -875,7 +875,7 @@ section {
 # Counts
 --------------------------------------------------------------*/
 .counts {
-  background: #f1f7fd;
+  background: #f4f4f4;
   padding: 70px 0 60px;
 }
 
@@ -1102,6 +1102,7 @@ section {
 # Departments
 --------------------------------------------------------------*/
 .departments {
+  background: #f4f4f4;
   overflow: hidden;
 }
 
