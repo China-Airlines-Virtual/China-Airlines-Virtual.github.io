@@ -296,10 +296,9 @@
         memberCard.appendChild(memberInfo)
         memberCard.appendChild(memberImageContainer)
 
+        const memberSocials = document.createElement('div')
+        memberSocials.classList.add('social')
         if (member.vid || member.vatsimId || member.youtubeChannel || member.instagramId || member.githubId) {
-          const memberSocials = document.createElement('div')
-          memberSocials.classList.add('social')
-
           if (member.youtubeChannel) {
             const youtubeIcon = document.createElement('i')
             youtubeIcon.classList.add('bi', 'bi-youtube')
@@ -349,9 +348,8 @@
             ivaoLink.appendChild(vatsimImg)
             memberSocials.appendChild(ivaoLink)
           }
-
-          memberExtra.appendChild(memberSocials)
         }
+        memberExtra.appendChild(memberSocials)
 
         if (member.joinDate) {
           const memberJoinDate = document.createElement('div')
