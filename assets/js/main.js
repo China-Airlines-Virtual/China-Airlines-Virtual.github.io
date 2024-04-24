@@ -278,7 +278,7 @@
         memberCard.appendChild(memberImageContainer)
         memberCard.appendChild(memberInfo)
 
-        if (member.youtubeChannel || member.instagramId || member.githubId) {
+        if (member.vid || member.vatsimId || member.youtubeChannel || member.instagramId || member.githubId) {
           const memberSocials = document.createElement('div')
           memberSocials.classList.add('social')
 
@@ -302,6 +302,20 @@
             githubLink.target = '_blank'
             githubLink.innerHTML = '<i class="bi bi-github"></i>'
             memberSocials.appendChild(githubLink)
+          }
+          if (member.vid) {
+            const ivaoLink = document.createElement('a')
+            ivaoLink.href = `https://www.ivao.aero/Member.aspx?Id=${member.vid}`
+            ivaoLink.target = '_blank'
+            ivaoLink.innerHTML = '<img width="24" style="filter: brightness(0) invert(1);" src="assets/img/icon-ivao.png" />'
+            memberSocials.appendChild(ivaoLink)
+          }
+          if (member.vatsimId) {
+            const ivaoLink = document.createElement('a')
+            ivaoLink.href = `https://stats.vatsim.net/stats/${member.vatsimId}`
+            ivaoLink.target = '_blank'
+            ivaoLink.innerHTML = '<img width="24" style="filter: brightness(0) invert(1);" src="assets/img/icon-vatsim.png" />'
+            memberSocials.appendChild(ivaoLink)
           }
 
           memberCard.appendChild(memberSocials)

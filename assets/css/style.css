@@ -1175,7 +1175,8 @@ section {
   margin: 12px 0 0 24px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  flex-grow: 1;
+  justify-content: flex-end;
 }
 
 .doctors .member .social a {
