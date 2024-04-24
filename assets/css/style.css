@@ -108,58 +108,6 @@ h6 {
 }
 
 /*--------------------------------------------------------------
-# Top Bar
---------------------------------------------------------------*/
-#topbar {
-  background: #fff;
-  height: 40px;
-  font-size: 14px;
-  transition: all 0.5s;
-  z-index: 996;
-}
-
-#topbar.topbar-scrolled {
-  top: -40px;
-}
-
-#topbar .contact-info a {
-  line-height: 1;
-  color: #444444;
-  transition: 0.3s;
-}
-
-#topbar .contact-info a:hover {
-  color: #1977cc;
-}
-
-#topbar .contact-info i {
-  color: #1977cc;
-  padding-right: 4px;
-  margin-left: 15px;
-  line-height: 0;
-}
-
-#topbar .contact-info i:first-child {
-  margin-left: 0;
-}
-
-#topbar .social-links a {
-  color: #437099;
-  padding-left: 15px;
-  display: inline-block;
-  line-height: 1px;
-  transition: 0.3s;
-}
-
-#topbar .social-links a:hover {
-  color: #1977cc;
-}
-
-#topbar .social-links a:first-child {
-  border-left: 0;
-}
-
-/*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
 #header {
@@ -167,7 +115,6 @@ h6 {
   transition: all 0.5s;
   z-index: 997;
   padding: 15px 0;
-  top: 40px;
   box-shadow: 0px 2px 15px rgba(25, 119, 204, 0.1);
   color: white;
 }
@@ -478,11 +425,11 @@ h6 {
   font-weight: 700;
   line-height: 56px;
   text-transform: uppercase;
-  color: #2c4964;
+  color: #fff;
 }
 
 #hero h2 {
-  color: #2c4964;
+  color: #fff;
   margin: 10px 0 0 0;
   font-size: 24px;
 }
