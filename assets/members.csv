@@ -1,12 +1,12 @@
 ﻿name,title,callsign,avatar file name,VID,VATSIM ID,youtube channel,instagram id,github id,nickname,join date
 C.Y. Liu,Pilot,CAL127,,641226,1540210,,,,阿諺,2021/7/22
-Ryan,Pilot(PP) / ATC(ADC/S1),CAL831,,674227,1477356,,,,Ryan,2021/7/22
-Jerry,Pilot / ATC(S2),CAL602,,,1654972,,,,,2021/7/22
+C.H. Chang,Pilot(PP) / ATC(ADC/S1),CAL831,,674227,1477356,,,,Ryan,2021/7/22
+Jerry Chen,Pilot / ATC(S2),CAL602,,,1654972,,,,,2021/7/22
 Jim Huang,Pilot,CAL117,,668573,1588231,,,,,2021/7/22
 Alan Chong,Pilot,CAL681,,656465,,,,,杰,2021/7/25
 C.F. Chang,Pilot,CAL330,,,1573118,,,,330,2021/7/25
 C.C. Liu,Pilot / ATC(I1),CAL030,,468593,995723,,,,排球,2021/7/29
-T.W. Liu,Pilot,CAL101,,700332,1680139,,,,Cooper,2021/8/21
+T.W. Liu,Pilot,CAL101,CAL101.jpg,700332,1680139,,,,Cooper,2021/8/21
 Tommy,Pilot,CAL512,,,1593005,,,,,2021/8/28
 Po-Chun Wu,Pilot / ATC(S2),CAL531,,633045,1464608,,,,凱多,2021/10/21
 T.L. Chao,Pilot,CAL102,,656529,1535435,,,,天天,2022/3/2
@@ -23,6 +23,6 @@ Morris Lin,Pilot / ATC,CAL225,,716099,1738199,,,,,2023/7/25
 綠綠,Pilot,CAL066,,,,,,,綠綠,2023/9/11
 C.H. Chang,Pilot / ATC,CAL031,,719504,,,,,ChuHan,2023/9/18
 Rory,Pilot,CAL906,,,,,,,Rory,2023/10/5
-Eli,Pilot,CAL079,,709904,,,,,Eli,2023/11/5
-H.W.Lin,Pilot / ATC,CAL318,,709351,1586025,,,,,2024/2/16
-W.L. Liou,Pilot / ATC,CAL123,,727717,1774281,,,ALiangLiang,阿良,2024/2/16
+Eli Chung,Pilot,CAL079,,709904,1687801,,,,,2023/11/5
+H.W. Lin,Pilot / ATC,CAL318,,709351,1586025,,,,,2024/2/16
+W.L. Liu,Pilot / ATC,CAL123,,727717,1774281,,,ALiangLiang,阿良,2024/2/16
