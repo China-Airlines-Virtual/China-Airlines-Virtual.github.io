@@ -238,10 +238,21 @@
           youtubeChannel: row[6].trim() || null,
           instagramId: row[7].trim() || null,
           githubId: row[8].trim() || null,
+          nickname: row[9].trim() || null,
+          joinDate: row[10].trim() || null,
         }))
     })
     .then((data) => {
-      console.log(data)
+      new PureCounter({
+        // Setting that can't' be overriden on pre-element
+        selector: ".purecounter-pilot", // HTML query selector for spesific element
+
+        // Settings that can be overridden on per-element basis, by `data-purecounter-*` attributes:
+        start: 0, // Starting number [uint]
+        end: data.length, // End number [uint]
+        duration: 1, // The time in seconds for the animation to complete [seconds]
+      })
+
       const memberListElem = document.getElementById('member-list')
       if (!memberListElem) return
 
@@ -250,7 +261,7 @@
         container.classList.add('col-lg-6')
 
         const memberCard = document.createElement('div')
-        memberCard.classList.add('member', 'd-flex', 'align-items-start')
+        memberCard.classList.add('member', 'd-flex')
 
         const memberInfo = document.createElement('div')
         memberInfo.classList.add('member-info')
@@ -258,11 +269,18 @@
         const memberName = document.createElement('h4')
         memberName.textContent = member.name
 
-        const memberTitle = document.createElement('span')
+        const memberNickname = document.createElement('span')
+        memberNickname.textContent = member.nickname || '　'  // full-width space is a placeholder
+
+        const memberTitle = document.createElement('p')
         memberTitle.textContent = member.title
 
         memberInfo.appendChild(memberName)
+        memberInfo.appendChild(memberNickname)
         memberInfo.appendChild(memberTitle)
+
+        const memberExtra = document.createElement('div')
+        memberExtra.classList.add('member-extra')
 
         const memberImageContainer = document.createElement('div')
         memberImageContainer.classList.add('pic')
@@ -275,51 +293,73 @@
           memberImageContainer.appendChild(memberImage)
         }
 
-        memberCard.appendChild(memberImageContainer)
         memberCard.appendChild(memberInfo)
+        memberCard.appendChild(memberImageContainer)
 
         if (member.vid || member.vatsimId || member.youtubeChannel || member.instagramId || member.githubId) {
           const memberSocials = document.createElement('div')
           memberSocials.classList.add('social')
 
           if (member.youtubeChannel) {
+            const youtubeIcon = document.createElement('i')
+            youtubeIcon.classList.add('bi', 'bi-youtube')
             const youtubeLink = document.createElement('a')
             youtubeLink.href = `https://youtube.com/${member.youtubeChannel}`
             youtubeLink.target = '_blank'
-            youtubeLink.innerHTML = '<i class="bi bi-youtube"></i>'
+            youtubeLink.appendChild(youtubeIcon)
             memberSocials.appendChild(youtubeLink)
           }
           if (member.instagramId) {
+            const instagramIcon = document.createElement('i')
+            instagramIcon.classList.add('bi', 'bi-instagram')
             const instagramLink = document.createElement('a')
             instagramLink.href = `https://instagram.com/${member.instagramId}`
             instagramLink.target = '_blank'
-            instagramLink.innerHTML = '<i class="bi bi-instagram"></i>'
+            instagramLink.appendChild(instagramIcon)
             memberSocials.appendChild(instagramLink)
           }
           if (member.githubId) {
+            const githubIcon = document.createElement('i')
+            githubIcon.classList.add('bi', 'bi-github')
             const githubLink = document.createElement('a')
             githubLink.href = `https://github.com/${member.githubId}`
             githubLink.target = '_blank'
-            githubLink.innerHTML = '<i class="bi bi-github"></i>'
+            githubLink.appendChild(githubIcon)
             memberSocials.appendChild(githubLink)
           }
           if (member.vid) {
+            const ivaoImg = document.createElement('img')
+            ivaoImg.width = "24"
+            ivaoImg.style.filter = 'brightness(0) invert(1)'
+            ivaoImg.src = 'assets/img/icon-ivao.png'
             const ivaoLink = document.createElement('a')
             ivaoLink.href = `https://www.ivao.aero/Member.aspx?Id=${member.vid}`
             ivaoLink.target = '_blank'
-            ivaoLink.innerHTML = '<img width="24" style="filter: brightness(0) invert(1);" src="assets/img/icon-ivao.png" />'
+            ivaoLink.appendChild(ivaoImg)
             memberSocials.appendChild(ivaoLink)
           }
           if (member.vatsimId) {
+            const vatsimImg = document.createElement('img')
+            vatsimImg.width = "24"
+            vatsimImg.style.filter = 'brightness(0) invert(1)'
+            vatsimImg.src = 'assets/img/icon-vatsim.png'
             const ivaoLink = document.createElement('a')
             ivaoLink.href = `https://stats.vatsim.net/stats/${member.vatsimId}`
             ivaoLink.target = '_blank'
-            ivaoLink.innerHTML = '<img width="24" style="filter: brightness(0) invert(1);" src="assets/img/icon-vatsim.png" />'
+            ivaoLink.appendChild(vatsimImg)
             memberSocials.appendChild(ivaoLink)
           }
 
-          memberCard.appendChild(memberSocials)
+          memberExtra.appendChild(memberSocials)
         }
+
+        if (member.joinDate) {
+          const memberJoinDate = document.createElement('div')
+          memberJoinDate.textContent = `Joined: ${member.joinDate}`
+          memberExtra.appendChild(memberJoinDate)
+        }
+
+        memberCard.appendChild(memberExtra)
 
         container.appendChild(memberCard)
 
