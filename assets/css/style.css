@@ -1124,7 +1124,7 @@ section {
 
 .doctors .member .pic {
   overflow: hidden;
-  width: 180px;
+  width: 100px;
   border-radius: 50%;
 }
 
@@ -1172,7 +1172,7 @@ section {
 }
 
 .doctors .member .social {
-  margin-top: 12px;
+  margin: 12px 0 0 24px;
   display: flex;
   align-items: center;
   justify-content: flex-start;

@@ -6,7 +6,7 @@
 * License: https://bootstrapmade.com/license/
 */
 
-(function() {
+(function () {
   "use strict";
 
   /**
@@ -118,7 +118,7 @@
   /**
    * Mobile nav toggle
    */
-  on('click', '.mobile-nav-toggle', function(e) {
+  on('click', '.mobile-nav-toggle', function (e) {
     select('#navbar').classList.toggle('navbar-mobile')
     this.classList.toggle('bi-list')
     this.classList.toggle('bi-x')
@@ -127,7 +127,7 @@
   /**
    * Mobile nav dropdowns activate
    */
-  on('click', '.navbar .dropdown > a', function(e) {
+  on('click', '.navbar .dropdown > a', function (e) {
     if (select('#navbar').classList.contains('navbar-mobile')) {
       e.preventDefault()
       this.nextElementSibling.classList.toggle('dropdown-active')
@@ -137,7 +137,7 @@
   /**
    * Scrool with ofset on links with a class name .scrollto
    */
-  on('click', '.scrollto', function(e) {
+  on('click', '.scrollto', function (e) {
     if (select(this.hash)) {
       e.preventDefault()
 
@@ -220,5 +220,100 @@
    * Initiate Pure Counter 
    */
   new PureCounter();
+
+  fetch('assets/members.csv')
+    .then(async (resp) => {
+      const data = await resp.text()
+      const results = Papa.parse(data)
+      results.data.shift()  // remove header
+      return results.data
+        .filter((row) => row[0].trim() !== '')
+        .map((row) => ({
+          name: row[0].trim(),
+          title: row[1].trim(),
+          callsign: row[2].trim(),
+          avatarFileName: row[3].trim() || null,
+          vid: row[4].trim() || null,
+          vatsimId: row[5].trim() || null,
+          youtubeChannel: row[6].trim() || null,
+          instagramId: row[7].trim() || null,
+          githubId: row[8].trim() || null,
+        }))
+    })
+    .then((data) => {
+      console.log(data)
+      const memberListElem = document.getElementById('member-list')
+      if (!memberListElem) return
+
+      const memberElems = data.map((member) => {
+        const container = document.createElement('div')
+        container.classList.add('col-lg-6')
+
+        const memberCard = document.createElement('div')
+        memberCard.classList.add('member', 'd-flex', 'align-items-start')
+
+        const memberInfo = document.createElement('div')
+        memberInfo.classList.add('member-info')
+
+        const memberName = document.createElement('h4')
+        memberName.textContent = member.name
+
+        const memberTitle = document.createElement('span')
+        memberTitle.textContent = member.title
+
+        memberInfo.appendChild(memberName)
+        memberInfo.appendChild(memberTitle)
+
+        const memberImageContainer = document.createElement('div')
+        memberImageContainer.classList.add('pic')
+        if (member.avatarFileName) {
+          const memberImage = document.createElement('img')
+          memberImage.classList.add('img-fluid')
+          memberImage.width = "100"
+          memberImage.src = `assets/img/members/${member.avatarFileName}`
+          memberImage.alt = ''
+          memberImageContainer.appendChild(memberImage)
+        }
+
+        memberCard.appendChild(memberImageContainer)
+        memberCard.appendChild(memberInfo)
+
+        if (member.youtubeChannel || member.instagramId || member.githubId) {
+          const memberSocials = document.createElement('div')
+          memberSocials.classList.add('social')
+
+          if (member.youtubeChannel) {
+            const youtubeLink = document.createElement('a')
+            youtubeLink.href = `https://youtube.com/${member.youtubeChannel}`
+            youtubeLink.target = '_blank'
+            youtubeLink.innerHTML = '<i class="bi bi-youtube"></i>'
+            memberSocials.appendChild(youtubeLink)
+          }
+          if (member.instagramId) {
+            const instagramLink = document.createElement('a')
+            instagramLink.href = `https://instagram.com/${member.instagramId}`
+            instagramLink.target = '_blank'
+            instagramLink.innerHTML = '<i class="bi bi-instagram"></i>'
+            memberSocials.appendChild(instagramLink)
+          }
+          if (member.githubId) {
+            const githubLink = document.createElement('a')
+            githubLink.href = `https://github.com/${member.githubId}`
+            githubLink.target = '_blank'
+            githubLink.innerHTML = '<i class="bi bi-github"></i>'
+            memberSocials.appendChild(githubLink)
+          }
+
+          memberCard.appendChild(memberSocials)
+        }
+
+        container.appendChild(memberCard)
+
+        return container
+      })
+
+      memberListElem.append(...memberElems)
+    })
+
 
 })()
