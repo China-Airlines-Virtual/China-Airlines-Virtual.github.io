@@ -1,28 +1,28 @@
-﻿name,title,callsign,avatar file name,VID,VATSIM ID,youtube channel,instagram id,github id,nickname,join date
-C.Y. Liu,Pilot,CAL127,,641226,1540210,,,,阿諺,2021/7/22
-C.H. Chang,Pilot(PP) / ATC(ADC/S1),CAL831,,674227,1477356,,,,Ryan,2021/7/22
-Jerry Chen,Pilot / ATC(S2),CAL602,,,1654972,,,,,2021/7/22
-Jim Huang,Pilot,CAL117,,668573,1588231,,,,,2021/7/22
-Alan Chong,Pilot,CAL681,,656465,,,,,杰,2021/7/25
-C.F. Chang,Pilot,CAL330,,,1573118,,,,330,2021/7/25
-C.C. Liu,Pilot / ATC(I1),CAL030,,468593,995723,,,,排球,2021/7/29
-T.W. Liu,Pilot,CAL101,CAL101.jpg,700332,1680139,,,,Cooper,2021/8/21
-Tommy,Pilot,CAL512,,,1593005,,,,,2021/8/28
-Po-Chun Wu,Pilot / ATC(S2),CAL531,,633045,1464608,,,,凱多,2021/10/21
-T.L. Chao,Pilot,CAL102,,656529,1535435,,,,天天,2022/3/2
-Jonathan Liao,Pilot / ATC(S1OJT),CAL744,,697872,1542314,,,,恩恩,2022/8/29
-Jhen Juang,Pilot,CALGE,,696896,1656328,,,,GE,2022/8/30
-Jonny Bu,Pilot,CAL1126,,699835,1696904,,,,,2022/10/10
-Y.H. Tai,Pilot,CAL168,,,1671762,,,,小宇,2022/11/16
-James Chen,Pilot,CAL301,CAL301.jpg,690290,1704611,,,,,2023/1/26
-Louis Lu,Pilot / ATC(S1),CAL137,,692476,1625128,,,,,2023/2/4
-Dennis Hsu,Pilot,CAL054,,711171,1334152,,,,,2023/4/21
-Wilson Chen,Pilot,CAL308,,689792,1508186,,,,歐姆,2023/5/14
-C.G. Liu,Pilot,CAL277,,648881,1526872,,,,阿樺,2023/5/29
-Morris Lin,Pilot / ATC,CAL225,,716099,1738199,,,,,2023/7/25
-綠綠,Pilot,CAL066,,,,,,,綠綠,2023/9/11
-C.H. Chang,Pilot / ATC,CAL031,,719504,,,,,ChuHan,2023/9/18
-Rory Hu,Pilot,CAL906,,702755,1684473,,,,,2023/10/5
-Eli Chung,Pilot,CAL079,,709904,1687801,,,,,2023/11/5
-H.W. Lin,Pilot / ATC,CAL318,,709351,1586025,,,,,2024/2/16
-W.L. Liu,Pilot / ATC,CAL123,,727717,1774281,,,ALiangLiang,阿良,2024/2/16
+﻿name,nickname,title,callsign,join date,avatar file name,VID,VATSIM ID,youtube channel,instagram id
+C.Y. Liu,阿諺,Pilot,CAL127,2021/7/22,,641226,1540210,,
+C.H. Chang,Ryan,Pilot(PP) / ATC(ADC/S1),CAL831,2021/7/22,,674227,1477356,,
+Jerry Chen,,Pilot / ATC(S2),CAL602,2021/7/22,,,1654972,,
+Jim Huang,,Pilot,CAL117,2021/7/22,,668573,1588231,,
+Alan Chong,杰,Pilot,CAL681,2021/7/25,,656465,,,
+C.F. Chang,330,Pilot,CAL330,2021/7/25,,,1573118,,
+C.C. Liu,排球,Pilot / ATC(I1),CAL030,2021/7/29,,468593,995723,,
+T.W. Liu,Cooper,Pilot,CAL101,2021/8/21,CAL101.jpg,700332,1680139,,
+Tommy,,Pilot,CAL512,2021/8/28,,,1593005,,
+Po-Chun Wu,凱多,Pilot / ATC(S3),CAL531,2021/10/21,,633045,1464608,,
+T.L. Chao,天天,Pilot,CAL102,2022/3/2,,656529,1535435,,
+Jonathan Liao,恩恩,Pilot / ATC(S1OJT),CAL744,2022/8/29,,697872,1542314,,
+Jhen Juang,GE,Pilot,CALGE,2022/8/30,,696896,1656328,,
+Jonny Bu,,Pilot,CAL1126,2022/10/10,,699835,1696904,,
+Y.H. Tai,小宇,Pilot,CAL168,2022/11/16,,,1671762,,
+James Chen,,Pilot,CAL301,2023/1/26,CAL301.jpg,690290,1704611,,
+Louis Lu,,Pilot / ATC(S1),CAL137,2023/2/4,,692476,1625128,,
+Dennis Hsu,,Pilot,CAL054,2023/4/21,,711171,1334152,,
+Wilson Chen,歐姆,Pilot,CAL308,2023/5/14,,689792,1508186,,
+C.G. Liu,阿樺,Pilot,CAL277,2023/5/29,,648881,1526872,,
+Morris Lin,,Pilot / ATC,CAL225,2023/7/25,,716099,1738199,,
+綠綠,綠綠,Pilot,CAL066,2023/9/11,,,,,
+C.H. Chang,ChuHan,Pilot / ATC,CAL031,2023/9/18,,719504,,,
+Rory Hu,,Pilot,CAL906,2023/10/5,,702755,1684473,,
+Eli Chung,,Pilot,CAL079,2023/11/5,,709904,1687801,,
+H.W. Lin,,Pilot / ATC,CAL318,2024/2/16,,709351,1586025,,
+W.L. Liu,阿良,Pilot / ATC,CAL123,2024/2/16,,727717,1774281,,

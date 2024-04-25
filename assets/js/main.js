@@ -230,16 +230,15 @@
         .filter((row) => row[0].trim() !== '')
         .map((row) => ({
           name: row[0].trim(),
-          title: row[1].trim(),
-          callsign: row[2].trim(),
-          avatarFileName: row[3].trim() || null,
-          vid: row[4].trim() || null,
-          vatsimId: row[5].trim() || null,
-          youtubeChannel: row[6].trim() || null,
-          instagramId: row[7].trim() || null,
-          githubId: row[8].trim() || null,
-          nickname: row[9].trim() || null,
-          joinDate: row[10].trim() || null,
+          nickname: row[1].trim() || null,
+          title: row[2].trim(),
+          callsign: row[3].trim(),
+          joinDate: row[4].trim() || null,
+          avatarFileName: row[5].trim() || null,
+          vid: row[6].trim() || null,
+          vatsimId: row[7].trim() || null,
+          youtubeChannel: row[8].trim() || null,
+          instagramId: row[9].trim() || null,
         }))
     })
     .then((data) => {
@@ -298,7 +297,7 @@
 
         const memberSocials = document.createElement('div')
         memberSocials.classList.add('social')
-        if (member.vid || member.vatsimId || member.youtubeChannel || member.instagramId || member.githubId) {
+        if (member.vid || member.vatsimId || member.youtubeChannel || member.instagramId) {
           if (member.youtubeChannel) {
             const youtubeIcon = document.createElement('i')
             youtubeIcon.classList.add('bi', 'bi-youtube')
@@ -316,15 +315,6 @@
             instagramLink.target = '_blank'
             instagramLink.appendChild(instagramIcon)
             memberSocials.appendChild(instagramLink)
-          }
-          if (member.githubId) {
-            const githubIcon = document.createElement('i')
-            githubIcon.classList.add('bi', 'bi-github')
-            const githubLink = document.createElement('a')
-            githubLink.href = `https://github.com/${member.githubId}`
-            githubLink.target = '_blank'
-            githubLink.appendChild(githubIcon)
-            memberSocials.appendChild(githubLink)
           }
           if (member.vid) {
             const ivaoImg = document.createElement('img')
