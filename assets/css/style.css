@@ -1054,11 +1054,14 @@ section {
 .members .member .pic {
   overflow: hidden;
   width: 100px;
-  border-radius: 50%;
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .members .member .pic img {
   transition: ease-in-out 0.3s;
+  border-radius: 50%;
 }
 
 .members .member:hover img {
@@ -1070,8 +1073,9 @@ section {
 }
 
 .members .member .member-extra {
+  min-width: 100px;
+
   display: flex;
-  flex-grow: 1;
   flex-flow: column;
   align-items: flex-end;
 
