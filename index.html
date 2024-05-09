@@ -33,9 +33,14 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/leaflet/leaflet.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- google icon -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
 
   <!-- =======================================================
   * Template Name: 中華虛擬航空
@@ -239,7 +244,7 @@
               </li>
             </ul>
           </div>
-          <div class="col-lg-9">
+          <div class="col-lg-3">
             <div class="tab-content">
               <div class="tab-pane active show" id="tab-1">
                 <div class="row gy-4">
@@ -302,6 +307,10 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="col-lg-6">
+            <h3>2024/04/13 聯飛紀錄</h3>
+            <div id="map-replay" style="min-height: 200px"></div>
           </div>
         </div>
 
@@ -505,8 +514,10 @@
 
   <script src="assets/vendor/papa-parse/papaparse.js"></script>
   <script src="//d3js.org/d3.v4.min.js"></script>
+  <script src="assets/vendor/leaflet/leaflet.js"></script>
 
   <!-- Template Main JS File -->
+  <script src="assets/js/map-replay.js"></script>
   <script src="assets/js/main.js"></script>
 
 </body>
