@@ -357,5 +357,6 @@
       memberListElem.append(...memberElems)
     })
 
+  initMapReplay('map-replay', 'assets/timeline/timeline-20240413.json', {lat: 23.5, lon: 116.7}, 6);
 
 })()
