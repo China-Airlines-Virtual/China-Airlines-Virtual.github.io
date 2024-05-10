@@ -39,7 +39,8 @@
   <link href="assets/css/style.css" rel="stylesheet">
 
   <!-- google icon -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
 
   <!-- =======================================================
@@ -153,7 +154,7 @@
           <div class="col-lg-4 col-md-6">
             <div class="count-box">
               <i class="fas fa-user-md"></i>
-              <span class="purecounter-pilot">0</span>
+              <span id="purecounter-pilots">0</span>
               <p>活躍機師</p>
             </div>
           </div>
@@ -161,8 +162,7 @@
           <div class="col-lg-4 col-md-6 mt-5 mt-md-0">
             <div class="count-box">
               <i class="far fa-hospital"></i>
-              <span data-purecounter-start="0" data-purecounter-end="6783" data-purecounter-duration="1"
-                class="purecounter"></span>
+              <span id="purecounter-legs"></span>
               <p>班次</p>
             </div>
           </div>
@@ -170,8 +170,7 @@
           <div class="col-lg-4 col-md-6 mt-5 mt-lg-0">
             <div class="count-box">
               <i class="fas fa-flask"></i>
-              <span data-purecounter-start="0" data-purecounter-end="30152" data-purecounter-duration="1"
-                class="purecounter"></span>
+              <span id="purecounter-time"></span>
               <p>飛行時數</p>
             </div>
           </div>
@@ -203,13 +202,15 @@
 
             <div class="icon-box">
               <div class="icon"><i class="bx bxl-facebook"></i></div>
-              <h4 class="title"><a href="https://www.facebook.com/groups/596448671760640" target="_blank">加入 Facebook 社團</a></h4>
+              <h4 class="title"><a href="https://www.facebook.com/groups/596448671760640" target="_blank">加入 Facebook
+                  社團</a></h4>
               <p class="description">社團內有設百位成員與你一起分享飛行時的快樂</p>
             </div>
 
             <div class="icon-box">
               <div class="icon"><i class="bx bxl-instagram"></i></div>
-              <h4 class="title"><a href="https://www.instagram.com/china.airlines_va" target="_blank">追蹤 Instagram</a></h4>
+              <h4 class="title"><a href="https://www.instagram.com/china.airlines_va" target="_blank">追蹤 Instagram</a>
+              </h4>
               <p class="description">不定時分享活動資訊及照片</p>
             </div>
 
@@ -228,7 +229,7 @@
         </div>
 
         <div class="row gy-4">
-          <div class="col-lg-3">
+          <div class="col-lg-2">
             <ul class="nav nav-tabs flex-column">
               <li class="nav-item">
                 <a class="nav-link active show" data-bs-toggle="tab" href="#tab-1">總航班數前 5 名</a>
@@ -242,67 +243,55 @@
               <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#tab-4">本年飛行時數前 5 名</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-5">本月航班數前 5 名</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-6">本月飛行時數前 5 名</a>
+              </li>
             </ul>
           </div>
-          <div class="col-lg-3">
+          <div class="col-lg-4">
             <div class="tab-content">
               <div class="tab-pane active show" id="tab-1">
                 <div class="row gy-4">
-                  <div class="col-lg-8 details order-2 order-lg-1">
+                  <div id="statistics-all-legs" class="col-lg-8 details order-2 order-lg-1">
                     <h3>總航班數前 5 名</h3>
-                    <p class="fst-italic">球哥 - 782 班次</p>
-                    <p class="fst-italic">330 - 558 班次</p>
-                    <p class="fst-italic">阿諺 - 482 班次</p>
-                    <p class="fst-italic">歐姆 - 354 班次</p>
-                    <p class="fst-italic">CHUHAN - 105 班次</p>
-                  </div>
-                  <div class="col-lg-4 text-center order-1 order-lg-2">
-                    <img src="assets/img/departments-1.jpg" alt="" class="img-fluid">
                   </div>
                 </div>
               </div>
               <div class="tab-pane" id="tab-2">
                 <div class="row gy-4">
-                  <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3>Et blanditiis nemo veritatis excepturi</h3>
-                    <p class="fst-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer
-                      a videna mareta paulona marka</p>
-                    <p>Ea ipsum voluptatem consequatur quis est. Illum error ullam omnis quia et reiciendis sunt sunt
-                      est. Non aliquid repellendus itaque accusamus eius et velit ipsa voluptates. Optio nesciunt eaque
-                      beatae accusamus lerode pakto madirna desera vafle de nideran pal</p>
-                  </div>
-                  <div class="col-lg-4 text-center order-1 order-lg-2">
-                    <img src="assets/img/departments-2.jpg" alt="" class="img-fluid">
+                  <div id="statistics-all-duration" class="col-lg-8 details order-2 order-lg-1">
+                    <h3>總飛行時數前 5 名</h3>
                   </div>
                 </div>
               </div>
               <div class="tab-pane" id="tab-3">
                 <div class="row gy-4">
-                  <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3>Impedit facilis occaecati odio neque aperiam sit</h3>
-                    <p class="fst-italic">Eos voluptatibus quo. Odio similique illum id quidem non enim fuga. Qui natus
-                      non sunt dicta dolor et. In asperiores velit quaerat perferendis aut</p>
-                    <p>Iure officiis odit rerum. Harum sequi eum illum corrupti culpa veritatis quisquam. Neque
-                      necessitatibus illo rerum eum ut. Commodi ipsam minima molestiae sed laboriosam a iste odio. Earum
-                      odit nesciunt fugiat sit ullam. Soluta et harum voluptatem optio quae</p>
-                  </div>
-                  <div class="col-lg-4 text-center order-1 order-lg-2">
-                    <img src="assets/img/departments-3.jpg" alt="" class="img-fluid">
+                  <div id="statistics-year-legs" class="col-lg-8 details order-2 order-lg-1">
+                    <h3>本年航班數前 5 名</h3>
                   </div>
                 </div>
               </div>
               <div class="tab-pane" id="tab-4">
                 <div class="row gy-4">
-                  <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3>Fuga dolores inventore laboriosam ut est accusamus laboriosam dolore</h3>
-                    <p class="fst-italic">Totam aperiam accusamus. Repellat consequuntur iure voluptas iure porro quis
-                      delectus</p>
-                    <p>Eaque consequuntur consequuntur libero expedita in voluptas. Nostrum ipsam necessitatibus aliquam
-                      fugiat debitis quis velit. Eum ex maxime error in consequatur corporis atque. Eligendi asperiores
-                      sed qui veritatis aperiam quia a laborum inventore</p>
+                  <div id="statistics-year-duration" class="col-lg-8 details order-2 order-lg-1">
+                    <h3>本年飛行時數前 5 名</h3>
                   </div>
-                  <div class="col-lg-4 text-center order-1 order-lg-2">
-                    <img src="assets/img/departments-4.jpg" alt="" class="img-fluid">
+                </div>
+              </div>
+              <div class="tab-pane" id="tab-5">
+                <div class="row gy-4">
+                  <div id="statistics-month-legs" class="col-lg-8 details order-2 order-lg-1">
+                    <h3>本月航班數前 5 名</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="tab-6">
+                <div class="row gy-4">
+                  <div id="statistics-month-duration" class="col-lg-8 details order-2 order-lg-1">
+                    <h3>本月飛行時數前 5 名</h3>
                   </div>
                 </div>
               </div>
@@ -496,8 +485,10 @@
       </div>
       <div class="social-links text-center text-md-right pt-3 pt-md-0">
         <a href="https://discord.gg/USDFnDamPG" target="_blank" class="discord"><i class="bx bxl-discord"></i></a>
-        <a href="https://www.facebook.com/groups/596448671760640" target="_blank" class="facebook"><i class="bx bxl-facebook"></i></a>
-        <a href="https://www.instagram.com/china.airlines_va" target="_blank" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="https://www.facebook.com/groups/596448671760640" target="_blank" class="facebook"><i
+            class="bx bxl-facebook"></i></a>
+        <a href="https://www.instagram.com/china.airlines_va" target="_blank" class="instagram"><i
+            class="bx bxl-instagram"></i></a>
       </div>
     </div>
   </footer><!-- End Footer -->
