@@ -257,6 +257,7 @@
 
       const memberElems = data.map((member) => {
         const container = document.createElement('div')
+        container.id = `member-${member.callsign.toLowerCase()}`
         container.classList.add('col-lg-6')
 
         const memberCard = document.createElement('div')
@@ -355,8 +356,10 @@
       })
 
       memberListElem.append(...memberElems)
-    })
 
-  initMapReplay('map-replay', 'assets/timeline/timeline-20240413.json', {lat: 23.5, lon: 116.7}, 6);
+
+      // Initiate map replay
+      initMapReplay('map-replay', 'assets/timeline/timeline-20240413.json', { lat: 23.5, lon: 116.7 }, 6, data);
+    })
 
 })()

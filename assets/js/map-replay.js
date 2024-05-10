@@ -1,4 +1,4 @@
-function initMapReplay(targetElementId, timelineName, center, zoom) {
+function initMapReplay(targetElementId, timelineName, center, zoom, members) {
     if (typeof L === 'undefined') {
         console.error('Leaflet library is not loaded');
         return;
@@ -31,13 +31,41 @@ function initMapReplay(targetElementId, timelineName, center, zoom) {
                     if (markerMap[pilot.cid] !== undefined) {
                         markerMap[pilot.cid].setLatLng([pilot.latitude, pilot.longitude]);
                     } else {
+                        const span = document.createElement('span')
+                        span.className = 'material-symbols-outlined'
+                        span.id = `flight-${pilot.cid}`
+                        span.innerText = 'flight'
+                        const flightSpan = document.createElement('span')
+                        flightSpan.className = 'flight-span'
+                        flightSpan.innerText = pilot.callsign
+                        const div = document.createElement('div')
+                        div.appendChild(span)
+                        div.appendChild(flightSpan)
+
+                        // Build popup
+                        const callsign = document.createElement('div')
+                        callsign.innerText = pilot.callsign
+                        const name = document.createElement('div')
+                        const member = members.find(member => member.vatsimId === String(pilot.cid))
+                        if (member) {
+                            const a = document.createElement('a')
+                            a.href = `#member-${member.callsign.toLowerCase()}`
+                            a.innerText = member.name
+                            name.appendChild(a)
+                        } else {
+                            name.innerText = pilot.name
+                        }
+                        const popup = document.createElement('div')
+                        popup.appendChild(callsign)
+                        popup.appendChild(name)
+
                         markerMap[pilot.cid] = L.marker([pilot.latitude, pilot.longitude], {
                             title: pilot.callsign,
                             icon: new L.DivIcon({
                                 className: 'flight-icon',
-                                html: `<span class="material-symbols-outlined" id="flight-${pilot.cid}">flight</span><span class="flight-span">${pilot.callsign}</span>`
+                                html: div
                             })
-                        }).bindPopup(pilot.callsign).addTo(map);
+                        }).bindPopup(popup).addTo(map);
                         markerInternalDom[pilot.cid] = document.getElementById(`flight-${pilot.cid}`);
                     }
 
