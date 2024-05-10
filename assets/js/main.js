@@ -216,11 +216,6 @@
     }
   });
 
-  /**
-   * Initiate Pure Counter 
-   */
-  new PureCounter();
-
   fetch('assets/members.csv')
     .then(async (resp) => {
       const data = await resp.text()
@@ -243,13 +238,10 @@
     })
     .then((data) => {
       new PureCounter({
-        // Setting that can't' be overriden on pre-element
-        selector: ".purecounter-pilot", // HTML query selector for spesific element
-
-        // Settings that can be overridden on per-element basis, by `data-purecounter-*` attributes:
-        start: 0, // Starting number [uint]
-        end: data.length, // End number [uint]
-        duration: 1, // The time in seconds for the animation to complete [seconds]
+        selector: "#purecounter-pilots",
+        start: 0,
+        end: data.length,
+        duration: 1,
       })
 
       const memberListElem = document.getElementById('member-list')
@@ -360,6 +352,60 @@
 
       // Initiate map replay
       initMapReplay('map-replay', 'assets/timeline/timeline-20240413.json', { lat: 23.5, lon: 116.7 }, 6, data);
+    })
+
+  fetch('assets/statistics.json')
+    .then((resp) => resp.json())
+    .then((data) => {
+      new PureCounter({
+        selector: "#purecounter-legs",
+        start: 0,
+        end: data.trackedLeg,
+        duration: 1,
+      })
+      new PureCounter({
+        selector: "#purecounter-time",
+        start: 0,
+        end: data.trackedTime,
+        duration: 1,
+      })
+
+      data.all.legs.forEach((row) => {
+        const p = document.createElement('p')
+        p.classList.add('fst-italic')
+        p.textContent = `${row.name} - ${row.legs} 班次`
+        document.getElementById('statistics-all-legs').appendChild(p)
+      })
+      data.all.time.forEach((row) => {
+        const p = document.createElement('p')
+        p.classList.add('fst-italic')
+        p.textContent = `${row.name} - ${Math.round(row.duration)} 小時`
+        document.getElementById('statistics-all-duration').appendChild(p)
+      })
+      data.year.legs.forEach((row) => {
+        const p = document.createElement('p')
+        p.classList.add('fst-italic')
+        p.textContent = `${row.name} - ${row.legs} 班次`
+        document.getElementById('statistics-year-legs').appendChild(p)
+      })
+      data.year.time.forEach((row) => {
+        const p = document.createElement('p')
+        p.classList.add('fst-italic')
+        p.textContent = `${row.name} - ${Math.round(row.duration)} 小時`
+        document.getElementById('statistics-year-duration').appendChild(p)
+      })
+      data.month.legs.forEach((row) => {
+        const p = document.createElement('p')
+        p.classList.add('fst-italic')
+        p.textContent = `${row.name} - ${row.legs} 班次`
+        document.getElementById('statistics-month-legs').appendChild(p)
+      })
+      data.month.time.forEach((row) => {
+        const p = document.createElement('p')
+        p.classList.add('fst-italic')
+        p.textContent = `${row.name} - ${Math.round(row.duration)} 小時`
+        document.getElementById('statistics-month-duration').appendChild(p)
+      })
     })
 
 })()
