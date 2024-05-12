@@ -1,8 +1,9 @@
-function createMarker(heading, callsign) {
+function createMarker(heading, callsign, color = 'black') {
     const span = document.createElement('span')
     span.className = 'material-symbols-outlined marker-icon'
     span.innerText = 'flight'
     span.style.transform = `rotate(${heading}deg)`
+    span.style.color = color
     const flightSpan = document.createElement('span')
     flightSpan.className = 'flight-span'
     flightSpan.innerText = callsign
@@ -121,7 +122,11 @@ function initLiveMap(targetElementId, center, zoom) {
                 title: pilot.callsign,
                 icon: new L.DivIcon({
                     className: 'flight-icon',
-                    html: createMarker(pilot.heading, pilot.callsign)
+                    html: createMarker(
+                        pilot.heading,
+                        pilot.callsign,
+                        (pilot.platform === 'IVAO' ? 'rgb(13, 44, 153)' : 'rgb(56, 224, 146)')
+                    )
                 })
             }).addTo(map)
         });
@@ -150,19 +155,20 @@ function initLiveMap(targetElementId, center, zoom) {
         fetch('https://api.ivao.aero/v2/tracker/whazzup')
             .then((response) => response.json())
             .then((data) => {
-                const rctpPilots = data.clients.pilots.filter(({ flight_plan }) =>
-                    flight_plan?.departure.startsWith('RC') || flight_plan?.arrival.startsWith('RC'))
+                const rctpPilots = data.clients.pilots.filter(({ flightPlan }) =>
+                    flightPlan?.departureId?.startsWith('RC') || flightPlan?.arrivalId?.startsWith('RC'))
                 return rctpPilots.map((pilot) => ({
                     id: 'I' + pilot.userId,
+                    platform: 'IVAO',
                     callsign: pilot.callsign,
                     userId: pilot.userId,
                     latitude: pilot.lastTrack.latitude,
                     longitude: pilot.lastTrack.longitude,
                     heading: pilot.lastTrack.heading,
-                    departure: pilot.flight_plan.departure,
-                    arrival: pilot.flight_plan.arrival,
-                    departureTime: formatTimeFromSeconds(pilot.flight_plan.departureTime),
-                    arrivalTime: formatTimeFromSeconds(pilot.flight_plan.departureTime + pilot.flight_plan.eet),
+                    departure: pilot.flightPlan.departureId,
+                    arrival: pilot.flightPlan.arrivalId,
+                    departureTime: formatTimeFromSeconds(pilot.flightPlan.departureTime),
+                    arrivalTime: formatTimeFromSeconds(pilot.flightPlan.departureTime + pilot.flightPlan.eet),
                 }))
             })
             .then(renderAircraftsOnMap),
@@ -173,6 +179,7 @@ function initLiveMap(targetElementId, center, zoom) {
                     flight_plan?.departure.startsWith('RC') || flight_plan?.arrival.startsWith('RC'))
                 return rctpPilots.map((pilot) => ({
                     id: 'V' + pilot.cid,
+                    platform: 'VATSIM',
                     callsign: pilot.callsign,
                     userId: pilot.cid,
                     latitude: pilot.latitude,
@@ -188,6 +195,7 @@ function initLiveMap(targetElementId, center, zoom) {
     ])
         .then(([ivaoPilots, vatsimPilots]) => {
             const pilots = ivaoPilots.concat(vatsimPilots)
+                .sort((a, b) => Number(a.departureTime) - Number(b.departureTime))
             const stringRows = pilots.map((pilot) =>
                 `${pilot.callsign.padEnd(7)} ${pilot.departure} ${pilot.arrival} ${pilot.departureTime} ${pilot.arrivalTime}`
             ).map(d => d.padEnd(27));
