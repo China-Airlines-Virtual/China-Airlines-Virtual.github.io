@@ -125,36 +125,68 @@ function initLiveMap(targetElementId, center, zoom) {
                 })
             }).addTo(map)
         });
+        return pilots
     }
 
-    fetch('https://api.ivao.aero/v2/tracker/whazzup')
-        .then((response) => response.json())
-        .then((data) => {
-            const rctpPilots = data.clients.pilots.filter(({ flight_plan }) =>
-                flight_plan?.departure === 'RCTP' || flight_plan?.arrival === 'RCTP')
-            return rctpPilots.map((pilot) => ({
-                id: 'I' + pilot.userId,
-                callsign: pilot.callsign,
-                userId: pilot.userId,
-                latitude: pilot.lastTrack.latitude,
-                longitude: pilot.lastTrack.longitude,
-                heading: pilot.lastTrack.heading
-            }))
+    function formatTimeFromSeconds(time) {
+        const inHours = time / 3600
+        const hours = Math.floor(inHours)
+        const minutes = (inHours - hours) * 60
+        return `${hours}${minutes}`
+    }
+
+    function addZuluTimes(time1, time2) {
+        return ('' + (Number(time1) + Number(time2))).padStart(4, 0)
+    }
+
+    Promise.all([
+        fetch('https://api.ivao.aero/v2/tracker/whazzup')
+            .then((response) => response.json())
+            .then((data) => {
+                const rctpPilots = data.clients.pilots.filter(({ flight_plan }) =>
+                    flight_plan?.departure === 'RCTP' || flight_plan?.arrival === 'RCTP')
+                return rctpPilots.map((pilot) => ({
+                    id: 'I' + pilot.userId,
+                    callsign: pilot.callsign,
+                    userId: pilot.userId,
+                    latitude: pilot.lastTrack.latitude,
+                    longitude: pilot.lastTrack.longitude,
+                    heading: pilot.lastTrack.heading,
+                    departure: pilot.flight_plan.departure,
+                    arrival: pilot.flight_plan.arrival,
+                    departureTime: formatTimeFromSeconds(pilot.flight_plan.departureTime),
+                    arrivalTime: formatTimeFromSeconds(pilot.flight_plan.departureTime + pilot.flight_plan.eet),
+                }))
+            })
+            .then(renderAircraftsOnMap),
+        fetch('https://data.vatsim.net/v3/vatsim-data.json')
+            .then((response) => response.json())
+            .then((data) => {
+                const rctpPilots = data.pilots.filter(({ flight_plan }) =>
+                    flight_plan?.departure === 'RCTP' || flight_plan?.arrival === 'RCTP')
+                return rctpPilots.map((pilot) => ({
+                    id: 'V' + pilot.cid,
+                    callsign: pilot.callsign,
+                    userId: pilot.cid,
+                    latitude: pilot.latitude,
+                    longitude: pilot.longitude,
+                    heading: pilot.heading,
+                    departure: pilot.flight_plan.departure,
+                    arrival: pilot.flight_plan.arrival,
+                    departureTime: pilot.flight_plan.deptime,
+                    arrivalTime: addZuluTimes(pilot.flight_plan.deptime, pilot.flight_plan.enroute_time),
+                }))
+            })
+            .then(renderAircraftsOnMap)
+    ])
+        .then(([ivaoPilots, vatsimPilots]) => {
+            const pilots = ivaoPilots.concat(vatsimPilots)
+            const update = createFlipFlapBoard(
+                pilots.map(() => ''.padEnd(27))
+            )
+            const stringRows = pilots.map((pilot) =>
+                `${pilot.callsign.padEnd(7)} ${pilot.departure} ${pilot.arrival} ${pilot.departureTime} ${pilot.arrivalTime}`
+            ).map(d => d.padEnd(27));
+            update(stringRows)
         })
-        .then(renderAircraftsOnMap)
-    fetch('https://data.vatsim.net/v3/vatsim-data.json')
-        .then((response) => response.json())
-        .then((data) => {
-            const rctpPilots = data.pilots.filter(({ flight_plan }) =>
-                flight_plan?.departure === 'RCTP' || flight_plan?.arrival === 'RCTP')
-            return rctpPilots.map((pilot) => ({
-                id: 'V' + pilot.cid,
-                callsign: pilot.callsign,
-                userId: pilot.cid,
-                latitude: pilot.latitude,
-                longitude: pilot.longitude,
-                heading: pilot.heading
-            }))
-        })
-        .then(renderAircraftsOnMap)
 }
