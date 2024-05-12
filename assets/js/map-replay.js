@@ -143,6 +143,9 @@ function initLiveMap(targetElementId, center, zoom) {
         return `${hours}${minutes}`
     }
 
+    const updateFlipFlapBoar = createFlipFlapBoard(
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => ''.padEnd(27))
+    )
     Promise.all([
         fetch('https://api.ivao.aero/v2/tracker/whazzup')
             .then((response) => response.json())
@@ -185,12 +188,9 @@ function initLiveMap(targetElementId, center, zoom) {
     ])
         .then(([ivaoPilots, vatsimPilots]) => {
             const pilots = ivaoPilots.concat(vatsimPilots)
-            const update = createFlipFlapBoard(
-                [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => ''.padEnd(27))
-            )
             const stringRows = pilots.map((pilot) =>
                 `${pilot.callsign.padEnd(7)} ${pilot.departure} ${pilot.arrival} ${pilot.departureTime} ${pilot.arrivalTime}`
             ).map(d => d.padEnd(27));
-            update(stringRows, true)
+            updateFlipFlapBoar(stringRows, true)
         })
 }
