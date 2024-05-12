@@ -6,6 +6,7 @@
   font-style: normal;
   color: #dedede;
 
+  position: relative;
   background-color: #191919;
   height: 250px;
   max-width: 460px;
@@ -21,6 +22,10 @@
 #flip-flap .flip-flap-row {
   position: absolute;
 }
+.flip-flap-board-footer {
+  position: absolute;
+  bottom: 0;
+}
 .flap {
   width: 16px;
   right: auto;
@@ -30,7 +35,7 @@
   height: 8px;
   width: 16px;
   overflow: hidden;
-  background: #141516;
+  background: #2a2a2a;
   transform-style: preserve-3d;
   animation-timing-function: ease-in;
   animation-duration: 0.20s;
