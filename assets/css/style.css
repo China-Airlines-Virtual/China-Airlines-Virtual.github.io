@@ -521,10 +521,6 @@ section {
   overflow: hidden;
 }
 
-.section-bg {
-  background-color: #f4f4f4;
-}
-
 .section-title {
   text-align: center;
   padding-bottom: 30px;
@@ -625,6 +621,14 @@ section {
   .breadcrumbs ol li {
     display: inline-block;
   }
+}
+
+/*--------------------------------------------------------------
+# Main
+--------------------------------------------------------------*/
+
+#main section:nth-child(even) {
+  background-color: #f4f4f4;
 }
 
 /*--------------------------------------------------------------
@@ -848,7 +852,6 @@ section {
 # Counts
 --------------------------------------------------------------*/
 .counts {
-  background: #f4f4f4;
   padding: 70px 0 60px;
 }
 
@@ -978,7 +981,6 @@ section {
 # Departments
 --------------------------------------------------------------*/
 .departments {
-  background: #f4f4f4;
   overflow: hidden;
 }
 
@@ -1038,7 +1040,7 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Doctors
+# Members
 --------------------------------------------------------------*/
 .members {
   background: #fff;
@@ -1641,4 +1643,8 @@ section {
   background: #1c84e3;
   color: #fff;
   text-decoration: none;
+}
+
+.leaflet-top, .leaflet-bottom {
+  z-index: 500 !important;
 }
