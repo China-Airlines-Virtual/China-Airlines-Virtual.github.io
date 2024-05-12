@@ -136,7 +136,11 @@ function initLiveMap(targetElementId, center, zoom) {
     }
 
     function addZuluTimes(time1, time2) {
-        return ('' + (Number(time1) + Number(time2))).padStart(4, 0)
+        console.log(time1, time2)
+        const addedMinutes = (Number(time1.slice(2)) + Number(time2.slice(2)) + '')
+        const minutes = (addedMinutes % 60 + '').padStart(2, 0)
+        const hours = (Number(time1.slice(0, 2)) + Number(time2.slice(0, 2)) + Math.floor(addedMinutes / 60) + '').padStart(2, 0)
+        return `${hours}${minutes}`
     }
 
     Promise.all([
@@ -144,7 +148,7 @@ function initLiveMap(targetElementId, center, zoom) {
             .then((response) => response.json())
             .then((data) => {
                 const rctpPilots = data.clients.pilots.filter(({ flight_plan }) =>
-                    flight_plan?.departure === 'RCTP' || flight_plan?.arrival === 'RCTP')
+                    flight_plan?.departure.startsWith('RC') || flight_plan?.arrival.startsWith('RC'))
                 return rctpPilots.map((pilot) => ({
                     id: 'I' + pilot.userId,
                     callsign: pilot.callsign,
@@ -163,7 +167,7 @@ function initLiveMap(targetElementId, center, zoom) {
             .then((response) => response.json())
             .then((data) => {
                 const rctpPilots = data.pilots.filter(({ flight_plan }) =>
-                    flight_plan?.departure === 'RCTP' || flight_plan?.arrival === 'RCTP')
+                    flight_plan?.departure.startsWith('RC') || flight_plan?.arrival.startsWith('RC'))
                 return rctpPilots.map((pilot) => ({
                     id: 'V' + pilot.cid,
                     callsign: pilot.callsign,

@@ -86,7 +86,6 @@ function createFlipFlapBoard(stringRows) {
   }
 
   function flipLetter(flap, fromLetter, toLetter, isFast, cb) {
-    console.log(isFast)
     let current = fromLetter,
       next = cycle[fromLetter],
       prevFlaps = flap.selectAll('.prev span, .front span'),
