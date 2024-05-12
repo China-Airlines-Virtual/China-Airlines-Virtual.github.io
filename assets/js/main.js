@@ -250,6 +250,7 @@
       const memberElems = data.map((member) => {
         const container = document.createElement('div')
         container.id = `member-${member.callsign.toLowerCase()}`
+        container.classList.add('col-xl-4')
         container.classList.add('col-lg-6')
 
         const memberCard = document.createElement('div')

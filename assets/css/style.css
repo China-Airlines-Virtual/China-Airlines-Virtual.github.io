@@ -1070,10 +1070,6 @@ section {
   transform: scale(1.1);
 }
 
-.members .member .member-info {
-  padding-right: 30px;
-}
-
 .members .member .member-extra {
   min-width: 100px;
 
