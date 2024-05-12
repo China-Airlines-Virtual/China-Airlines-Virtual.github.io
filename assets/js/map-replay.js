@@ -1,3 +1,17 @@
+function createMarker(heading, callsign) {
+    const span = document.createElement('span')
+    span.className = 'material-symbols-outlined marker-icon'
+    span.innerText = 'flight'
+    span.style.transform = `rotate(${heading}deg)`
+    const flightSpan = document.createElement('span')
+    flightSpan.className = 'flight-span'
+    flightSpan.innerText = callsign
+    const div = document.createElement('div')
+    div.appendChild(span)
+    div.appendChild(flightSpan)
+    return div
+}
+
 function initMapReplay(targetElementId, timelineName, center, zoom, members) {
     if (typeof L === 'undefined') {
         console.error('Leaflet library is not loaded');
@@ -15,8 +29,7 @@ function initMapReplay(targetElementId, timelineName, center, zoom, members) {
         attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
     }).addTo(map);
 
-    const markerMap = {};
-    const markerInternalDom = {};
+    const markerMap = new Map();
     const lastSeenTick = {};
 
     fetch(timelineName)
@@ -28,20 +41,14 @@ function initMapReplay(targetElementId, timelineName, center, zoom, members) {
             const intervalId = setInterval(() => {
                 const tickData = data[timelineKey[tick]];
                 for (const pilot of tickData) {
-                    if (markerMap[pilot.cid] !== undefined) {
-                        markerMap[pilot.cid].setLatLng([pilot.latitude, pilot.longitude]);
+                    if (markerMap.has(pilot.cid)) {
+                        markerMap.get(pilot.cid).setLatLng([pilot.latitude, pilot.longitude]);
+                        markerMap.get(pilot.cid)
+                            ._icon
+                            .querySelector('.marker-icon')
+                            .style
+                            .transform = `rotate(${pilot.heading}deg)`
                     } else {
-                        const span = document.createElement('span')
-                        span.className = 'material-symbols-outlined'
-                        span.id = `flight-${pilot.cid}`
-                        span.innerText = 'flight'
-                        const flightSpan = document.createElement('span')
-                        flightSpan.className = 'flight-span'
-                        flightSpan.innerText = pilot.callsign
-                        const div = document.createElement('div')
-                        div.appendChild(span)
-                        div.appendChild(flightSpan)
-
                         // Build popup
                         const callsign = document.createElement('div')
                         callsign.innerText = pilot.callsign
@@ -59,17 +66,18 @@ function initMapReplay(targetElementId, timelineName, center, zoom, members) {
                         popup.appendChild(callsign)
                         popup.appendChild(name)
 
-                        markerMap[pilot.cid] = L.marker([pilot.latitude, pilot.longitude], {
-                            title: pilot.callsign,
-                            icon: new L.DivIcon({
-                                className: 'flight-icon',
-                                html: div
-                            })
-                        }).bindPopup(popup).addTo(map);
-                        markerInternalDom[pilot.cid] = document.getElementById(`flight-${pilot.cid}`);
+                        markerMap.set(
+                            pilot.cid,
+                            L.marker([pilot.latitude, pilot.longitude], {
+                                title: pilot.callsign,
+                                icon: new L.DivIcon({
+                                    className: 'flight-icon',
+                                    html: createMarker(pilot.heading, pilot.callsign)
+                                })
+                            }).bindPopup(popup).addTo(map)
+                        )
                     }
 
-                    markerInternalDom[pilot.cid].style.transform = `rotate(${pilot.heading}deg)`;
                     lastSeenTick[pilot.cid] = tick;
                 }
                 tick++;
@@ -89,4 +97,64 @@ function initMapReplay(targetElementId, timelineName, center, zoom, members) {
                 }
             }, 200);
         });
+}
+
+function initLiveMap(targetElementId, center, zoom) {
+    const targetElement = document.getElementById(targetElementId);
+    targetElement.style.height = '100%';
+    targetElement.style.width = '100%';
+
+    const map = L.map(targetElementId, {
+        fullscreenControl: true,
+    }).setView(center, zoom);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    }).addTo(map);
+
+    function renderAircraftsOnMap(pilots) {
+        pilots.forEach((pilot) => {
+            const { latitude, longitude } = pilot
+
+            L.marker([latitude, longitude], {
+                title: pilot.callsign,
+                icon: new L.DivIcon({
+                    className: 'flight-icon',
+                    html: createMarker(pilot.heading, pilot.callsign)
+                })
+            }).addTo(map)
+        });
+    }
+
+    fetch('https://api.ivao.aero/v2/tracker/whazzup')
+        .then((response) => response.json())
+        .then((data) => {
+            const rctpPilots = data.clients.pilots.filter(({ flight_plan }) =>
+                flight_plan?.departure === 'RCTP' || flight_plan?.arrival === 'RCTP')
+            return rctpPilots.map((pilot) => ({
+                id: 'I' + pilot.userId,
+                callsign: pilot.callsign,
+                userId: pilot.userId,
+                latitude: pilot.lastTrack.latitude,
+                longitude: pilot.lastTrack.longitude,
+                heading: pilot.lastTrack.heading
+            }))
+        })
+        .then(renderAircraftsOnMap)
+    fetch('https://data.vatsim.net/v3/vatsim-data.json')
+        .then((response) => response.json())
+        .then((data) => {
+            const rctpPilots = data.pilots.filter(({ flight_plan }) =>
+                flight_plan?.departure === 'RCTP' || flight_plan?.arrival === 'RCTP')
+            return rctpPilots.map((pilot) => ({
+                id: 'V' + pilot.cid,
+                callsign: pilot.callsign,
+                userId: pilot.cid,
+                latitude: pilot.latitude,
+                longitude: pilot.longitude,
+                heading: pilot.heading
+            }))
+        })
+        .then(renderAircraftsOnMap)
 }
