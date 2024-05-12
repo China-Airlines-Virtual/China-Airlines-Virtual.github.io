@@ -134,14 +134,15 @@ function initLiveMap(targetElementId, center, zoom) {
     }
 
     function formatTimeFromSeconds(time) {
+        console.log(time)
         const inHours = time / 3600
         const hours = Math.floor(inHours)
-        const minutes = (inHours - hours) * 60
-        return `${hours}${minutes}`
+        const hoursStr = String(Math.floor(inHours)).padStart(2, 0)
+        const minutesStr = String(time / 60 - hours * 60).padStart(2, 0)
+        return `${hoursStr}${minutesStr}`
     }
 
     function addZuluTimes(time1, time2) {
-        console.log(time1, time2)
         const addedMinutes = (Number(time1.slice(2)) + Number(time2.slice(2)) + '')
         const minutes = (addedMinutes % 60 + '').padStart(2, 0)
         const hours = (Number(time1.slice(0, 2)) + Number(time2.slice(0, 2)) + Math.floor(addedMinutes / 60) + '').padStart(2, 0)
