@@ -187,6 +187,6 @@ function initLiveMap(targetElementId, center, zoom) {
             const stringRows = pilots.map((pilot) =>
                 `${pilot.callsign.padEnd(7)} ${pilot.departure} ${pilot.arrival} ${pilot.departureTime} ${pilot.arrivalTime}`
             ).map(d => d.padEnd(27));
-            update(stringRows)
+            update(stringRows, true)
         })
 }

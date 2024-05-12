@@ -69,7 +69,7 @@ function createFlipFlapBoard(stringRows) {
   stringRows.push(...rows.data());
   flip(stringRows);
 
-  function flip(stringRows) {
+  function flip(stringRows, isFast = false) {
     let q = d3.queue();
     rows.each(function () {
       d3.select(this)
@@ -78,19 +78,19 @@ function createFlipFlapBoard(stringRows) {
           let toLetter = stringRows[0][i],
             flap = d3.select(this);
           if (fromLetter !== toLetter) {
-            q.defer(flipLetter, flap.datum(toLetter), fromLetter, toLetter);
+            q.defer(flipLetter, flap.datum(toLetter), fromLetter, toLetter, isFast);
           }
         });
       stringRows.push(stringRows.shift());
     });
   }
 
-  function flipLetter(flap, fromLetter, toLetter, cb) {
+  function flipLetter(flap, fromLetter, toLetter, isFast, cb) {
+    console.log(isFast)
     let current = fromLetter,
       next = cycle[fromLetter],
       prevFlaps = flap.selectAll('.prev span, .front span'),
-      nextFlaps = flap.selectAll('.back span, .next span'),
-      fast;
+      nextFlaps = flap.selectAll('.back span, .next span');
 
     flap.select('.front').on('animationiteration', function () {
       if (next === toLetter) {
@@ -100,9 +100,7 @@ function createFlipFlapBoard(stringRows) {
         return cb();
       }
 
-      if (!fast) {
-        fast = flap.classed('fast', true);
-      }
+      flap.classed('fast', isFast);
 
       prevFlaps.text(next);
 
@@ -119,10 +117,10 @@ function createFlipFlapBoard(stringRows) {
     nextFlaps.text(next);
   }
 
-  return function updateFlipFlapBoard(newStringRows) {
+  return function updateFlipFlapBoard(newStringRows, isFast = false) {
     for (i in newStringRows) {
       stringRows[i] = newStringRows[i]
     }
-    flip(stringRows)
+    flip(stringRows, isFast)
   }
 }
