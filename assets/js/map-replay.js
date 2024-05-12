@@ -125,7 +125,7 @@ function initLiveMap(targetElementId, center, zoom) {
                     html: createMarker(
                         pilot.heading,
                         pilot.callsign,
-                        (pilot.platform === 'IVAO' ? 'rgb(13, 44, 153)' : 'rgb(56, 224, 146)')
+                        (pilot.platform === 'IVAO' ? 'rgb(13, 44, 153)' : 'rgb(41, 180, 115)')
                     )
                 })
             }).addTo(map)
