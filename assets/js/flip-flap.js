@@ -120,8 +120,9 @@ function createFlipFlapBoard(stringRows) {
   }
 
   return function updateFlipFlapBoard(newStringRows) {
-    stringRows = newStringRows
-    console.log(stringRows)
+    for (i in newStringRows) {
+      stringRows[i] = newStringRows[i]
+    }
     flip(stringRows)
   }
 }

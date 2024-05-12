@@ -182,7 +182,7 @@ function initLiveMap(targetElementId, center, zoom) {
         .then(([ivaoPilots, vatsimPilots]) => {
             const pilots = ivaoPilots.concat(vatsimPilots)
             const update = createFlipFlapBoard(
-                pilots.map(() => ''.padEnd(27))
+                [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => ''.padEnd(27))
             )
             const stringRows = pilots.map((pilot) =>
                 `${pilot.callsign.padEnd(7)} ${pilot.departure} ${pilot.arrival} ${pilot.departureTime} ${pilot.arrivalTime}`
