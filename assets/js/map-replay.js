@@ -84,7 +84,6 @@ function initMapReplay(targetElementId, timelineName, center, zoom, members) {
                 tick++;
 
                 if (tick >= timelineKey.length) {
-                    console.log('stop');
                     clearInterval(intervalId);
                 }
 
@@ -132,10 +131,10 @@ async function loadAirportCityMap() {
 
 async function initFlipFlapBoard() {
     document.getElementById('flip-flap-header').innerText = (isIcaoVersion)
-        ? '　　班次　　出發　　飛往　 離場　　抵達'
-        : '　　班次　　　　　　出發　　　　　　　　飛往　　　　　離場　　抵達'
+        ? '　　班次　　出發　　目的地 離場　　抵達'
+        : '　　班次　　　　　　出發　　　　　　　　目的地　　　　離場　　抵達 登機'
     const updateFlipFlapBoard = createFlipFlapBoard(
-        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => ''.padEnd(FLAPS_PER_ROW)),
+        11,
         FLAPS_PER_ROW
     )
 
@@ -162,7 +161,8 @@ async function initFlipFlapBoard() {
                 padAndSlice(pilot.departureTime, 4) +
                 padAndSlice(pilot.arrivalTime, 4)
         }).map(d => padAndSlice(d, FLAPS_PER_ROW));
-        updateFlipFlapBoard(stringRows, true)
+        const blinkRows = pilots.map((pilot) => !!pilot.isBoarding)
+        updateFlipFlapBoard(stringRows, blinkRows, true)
     }
 }
 
@@ -248,6 +248,7 @@ function getOnlinePilots(map) {
                     arrival: pilot.flightPlan.arrivalId,
                     departureTime: formatTimeFromSeconds(pilot.flightPlan.departureTime),
                     arrivalTime: formatTimeFromSeconds(pilot.flightPlan.departureTime + pilot.flightPlan.eet),
+                    isBoarding: pilot.lastTrack.state === 'Boarding',
                 }))
             }),
         fetch('https://data.vatsim.net/v3/vatsim-data.json')
@@ -267,6 +268,7 @@ function getOnlinePilots(map) {
                     arrival: pilot.flight_plan.arrival,
                     departureTime: pilot.flight_plan.deptime,
                     arrivalTime: addZuluTimes(pilot.flight_plan.deptime, pilot.flight_plan.enroute_time),
+                    isBoarding: false,
                 }))
             }),
     ]

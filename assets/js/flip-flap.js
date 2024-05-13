@@ -10,9 +10,10 @@ const charCycle = makeCycle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ')
 const numericCycle = makeCycle('0123456789 ')
 
 function createFlipFlapBoard(
-  stringRows,
+  rowAmount,
   width
 ) {
+  let stringRows = [...Array(rowAmount).keys()].map(() => ''.padEnd(width))
   let rows = d3.select('#flip-flap')
     .selectAll('.flip-flap-row')
     .data(stringRows)
@@ -48,6 +49,20 @@ function createFlipFlapBoard(
 
   stringRows.push(...rows.data());
   flip(stringRows);
+
+  // create blinking dots
+  const dotsList = []
+  const rowsDom = document.getElementsByClassName('flip-flap-row')
+  for (let i = 0; i < rowAmount; i++) {
+    const row = rowsDom[i]
+    const dot = document.createElement('div')
+    dot.classList.add('dot')
+    const dot2 = dot.cloneNode(true)
+    dot2.classList.add('dot-2')
+    row.appendChild(dot)
+    row.appendChild(dot2)
+    dotsList.push([dot, dot2])
+  }
 
   function flip(stringRows, isFast = false) {
     let q = d3.queue();
@@ -101,9 +116,11 @@ function createFlipFlapBoard(
     nextFlaps.text(next);
   }
 
-  return function updateFlipFlapBoard(newStringRows, isFast = false) {
-    for (i in newStringRows) {
-      stringRows[i] = newStringRows[i]
+  return function updateFlipFlapBoard(newStringRows, newBlinkRows, isFast = false) {
+    for (i in [...Array(rowAmount).keys()]) {
+      stringRows[i] = newStringRows[i] ?? ''.padEnd(width)
+      dotsList[i][0].classList.toggle('blink-1', newBlinkRows[i] ?? false)
+      dotsList[i][1].classList.toggle('blink-2', newBlinkRows[i] ?? false)
     }
     flip(stringRows, isFast)
   }

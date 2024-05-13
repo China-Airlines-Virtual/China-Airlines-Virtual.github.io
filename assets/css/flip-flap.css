@@ -10,7 +10,7 @@
   position: relative;
   background-color: #414346;
   height: 250px;
-  max-width: 564px;
+  max-width: 588px;
   padding: 4px 12px;
 }
 @media (max-width: 1200px) {
@@ -111,4 +111,43 @@
     transform: rotateX(0deg);
     background-color: #232323;
   }
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  left: 544px;
+
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  background-color: #4c4c4c;
+}
+
+.dot-2 {
+  left: 554px;
+}
+
+.dot.blink-1 {
+  animation-name: blink;
+  background-color: #35ff35;
+  box-shadow: 0px 0px 3px 1px #35ff35;
+}
+
+.dot-2.blink-2 {
+  animation-name: blink2;
+  background-color: #35ff35;
+  box-shadow: 0px 0px 3px 1px #35ff35;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  50.1%, 100% { opacity: 0; }
+}
+
+@keyframes blink2 {
+  0%, 50% { opacity: 0; }
+  50.1%, 100% { opacity: 1; }
 }

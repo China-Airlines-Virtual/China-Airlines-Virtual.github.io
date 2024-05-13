@@ -417,7 +417,6 @@
     // update live map
     pilotsPromises.forEach((pilotsPromise) =>
       pilotsPromise.then((pilots) => {
-        console.log(pilots.forEach)
         pilots.forEach((pilot) => {
           if (markerMap.has(pilot.id)) {
             markerMap.get(
