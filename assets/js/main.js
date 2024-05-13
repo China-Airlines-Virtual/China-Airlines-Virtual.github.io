@@ -6,7 +6,7 @@
 * License: https://bootstrapmade.com/license/
 */
 
-(function () {
+(async function () {
   "use strict";
 
   /**
@@ -409,6 +409,40 @@
       })
     })
 
-  initLiveMap('live-map', { lat: 25.07742848819059, lon: 121.23215698936468 }, 4)
-
+  const map = initLiveMap('live-map', { lat: 25.07742848819059, lon: 121.23215698936468 }, 4)
+  const markerMap = new Map()
+  const updateFlipFlapBoard = await initFlipFlapBoard()
+  async function updateLiveTraffic() {
+    const pilotsPromises = getOnlinePilots()
+    // update live map
+    pilotsPromises.forEach((pilotsPromise) =>
+      pilotsPromise.then((pilots) => {
+        console.log(pilots.forEach)
+        pilots.forEach((pilot) => {
+          if (markerMap.has(pilot.id)) {
+            markerMap.get(
+              pilot.id,
+            )(pilot)
+          } else {
+            markerMap.set(
+              pilot.id,
+              renderAircraftOnMap(pilot, map)
+            )
+          }
+        })
+      })
+    )
+    // update flip-flap board
+    const pilots = (await Promise.all(pilotsPromises))
+      .flat()
+      .sort((a, b) => Number(a.departureTime) - Number(b.departureTime))
+    const departurePilots = pilots.filter((pilot) => pilot.departure.startsWith('RC'))
+    const arrivalPilots = pilots.filter((pilot) => pilot.arrival.startsWith('RC'))
+    updateFlipFlapBoard(departurePilots)
+    setTimeout(() => {
+      updateFlipFlapBoard(arrivalPilots)
+    }, 15000)
+  }
+  updateLiveTraffic()
+  setInterval(updateLiveTraffic, 30000)
 })()

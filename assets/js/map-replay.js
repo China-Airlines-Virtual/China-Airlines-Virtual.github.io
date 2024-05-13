@@ -112,73 +112,107 @@ function replaceNonAlphabetAndNumericWithSpace(str) {
     return str.replace(/[^A-Z0-9]/g, ' ')
 }
 
-async function initFlipFlapBoard(pilots) {
+async function loadAirportCityMap() {
+    airportCityMap = await fetch('assets/airports.csv')
+        .then((resp) => resp.text())
+        .then((data) => {
+            const results = Papa.parse(data)
+            const newAirportCityMap = new Map()
+            results.data
+                .filter((row) => row[0].trim() !== '')
+                .forEach(
+                    (row) => newAirportCityMap.set(
+                        row[0].trim(),
+                        row[1].trim().toUpperCase().slice(0, 13)
+                    )
+                )
+            return newAirportCityMap
+        })
+}
+
+async function initFlipFlapBoard() {
     document.getElementById('flip-flap-header').innerText = (isIcaoVersion)
         ? '　　班次　　出發　　飛往　 離場　　抵達'
         : '　　班次　　　　　　出發　　　　　　　　飛往　　　　　離場　　抵達'
-    const updateFlipFlapBoar = createFlipFlapBoard(
+    const updateFlipFlapBoard = createFlipFlapBoard(
         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => ''.padEnd(FLAPS_PER_ROW)),
         FLAPS_PER_ROW
     )
 
     if (!isIcaoVersion && airportCityMap === null) {
-        airportCityMap = await fetch('assets/airports.csv')
-            .then((resp) => resp.text())
-            .then((data) => {
-                const results = Papa.parse(data)
-                const newAirportCityMap = new Map()
-                results.data
-                    .filter((row) => row[0].trim() !== '')
-                    .forEach(
-                        (row) => newAirportCityMap.set(
-                            row[0].trim(),
-                            row[1].trim().toUpperCase().slice(0, 13)
-                        )
-                    )
-                return newAirportCityMap
-            })
+        await loadAirportCityMap()
     }
 
-    const stringRows = pilots.map((pilot) => {
-        const departureCity = (isIcaoVersion)
-            ? pilot.departure
-            : replaceNonAlphabetAndNumericWithSpace(
-                airportCityMap.get(pilot.departure) || pilot.departure
-            )
-        const arrivalCity = (isIcaoVersion)
-            ? pilot.arrival
-            : replaceNonAlphabetAndNumericWithSpace(
-                airportCityMap.get(pilot.arrival) || pilot.arrival
-            )
-        const airportWidth = (isIcaoVersion) ? 4 : 13
-        return padAndSlice(pilot.callsign, 7) + ' ' +
-            padAndSlice(departureCity, airportWidth) + ' ' +
-            padAndSlice(arrivalCity, airportWidth) +
-            padAndSlice(pilot.departureTime, 4) +
-            padAndSlice(pilot.arrivalTime, 4)
-    }).map(d => padAndSlice(d, FLAPS_PER_ROW));
-    updateFlipFlapBoar(stringRows, true)
+    return function (pilots) {
+        const stringRows = pilots.map((pilot) => {
+            const departureCity = (isIcaoVersion)
+                ? pilot.departure
+                : replaceNonAlphabetAndNumericWithSpace(
+                    airportCityMap.get(pilot.departure) || pilot.departure
+                )
+            const arrivalCity = (isIcaoVersion)
+                ? pilot.arrival
+                : replaceNonAlphabetAndNumericWithSpace(
+                    airportCityMap.get(pilot.arrival) || pilot.arrival
+                )
+            const airportWidth = (isIcaoVersion) ? 4 : 13
+            return padAndSlice(pilot.callsign, 7) + ' ' +
+                padAndSlice(departureCity, airportWidth) + ' ' +
+                padAndSlice(arrivalCity, airportWidth) +
+                padAndSlice(pilot.departureTime, 4) +
+                padAndSlice(pilot.arrivalTime, 4)
+        }).map(d => padAndSlice(d, FLAPS_PER_ROW));
+        updateFlipFlapBoard(stringRows, true)
+    }
 }
 
-function initLiveMap(targetElementId, center, zoom) {
-    const targetElement = document.getElementById(targetElementId);
-    targetElement.style.height = '100%';
-    targetElement.style.width = '100%';
+function formatTimeFromSeconds(time) {
+    const inHours = time / 3600
+    const hours = Math.floor(inHours)
+    const hoursStr = String(Math.floor(inHours)).padStart(2, 0)
+    const minutesStr = String(time / 60 - hours * 60).padStart(2, 0)
+    return `${hoursStr}${minutesStr}`
+}
 
-    const map = L.map(targetElementId, {
-        fullscreenControl: true,
-    }).setView(center, zoom);
+function addZuluTimes(time1, time2) {
+    const addedMinutes = (Number(time1.slice(2)) + Number(time2.slice(2)) + '')
+    const minutes = (addedMinutes % 60 + '').padStart(2, 0)
+    const hours = (Number(time1.slice(0, 2)) + Number(time2.slice(0, 2)) + Math.floor(addedMinutes / 60) + '').padStart(2, 0)
+    return `${hours}${minutes}`
+}
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
-    }).addTo(map);
+function renderAircraftOnMap(pilot, map) {
+    const { latitude, longitude } = pilot
 
-    function renderAircraftsOnMap(pilots) {
-        pilots.forEach((pilot) => {
-            const { latitude, longitude } = pilot
+    const marker = L.marker([latitude, longitude], {
+        title: pilot.callsign,
+        icon: new L.DivIcon({
+            className: 'flight-icon',
+            html: createMarker(
+                pilot.heading,
+                pilot.callsign,
+                (pilot.platform === 'IVAO' ? 'rgb(13, 44, 153)' : 'rgb(41, 180, 115)')
+            )
+        })
+    }).addTo(map)
 
-            L.marker([latitude, longitude], {
+    return function (pilot) {
+        const { latitude, longitude } = pilot
+        marker.setLatLng([latitude, longitude])
+        marker._icon
+            .querySelector('.marker-icon')
+            .style
+            .transform = `rotate(${pilot.heading}deg)`
+    }
+}
+
+function updateAircraftsOnMap(pilots, map) {
+    pilots.forEach((pilot) => {
+        const { latitude, longitude } = pilot
+        if (pilot.marker) {
+            pilot.marker.setLatLng([latitude, longitude])
+        } else {
+            pilot.marker = L.marker([latitude, longitude], {
                 title: pilot.callsign,
                 icon: new L.DivIcon({
                     className: 'flight-icon',
@@ -189,26 +223,14 @@ function initLiveMap(targetElementId, center, zoom) {
                     )
                 })
             }).addTo(map)
-        });
-        return pilots
-    }
+        }
+    });
+    return pilots
 
-    function formatTimeFromSeconds(time) {
-        const inHours = time / 3600
-        const hours = Math.floor(inHours)
-        const hoursStr = String(Math.floor(inHours)).padStart(2, 0)
-        const minutesStr = String(time / 60 - hours * 60).padStart(2, 0)
-        return `${hoursStr}${minutesStr}`
-    }
+}
 
-    function addZuluTimes(time1, time2) {
-        const addedMinutes = (Number(time1.slice(2)) + Number(time2.slice(2)) + '')
-        const minutes = (addedMinutes % 60 + '').padStart(2, 0)
-        const hours = (Number(time1.slice(0, 2)) + Number(time2.slice(0, 2)) + Math.floor(addedMinutes / 60) + '').padStart(2, 0)
-        return `${hours}${minutes}`
-    }
-
-    Promise.all([
+function getOnlinePilots(map) {
+    return [
         fetch('https://api.ivao.aero/v2/tracker/whazzup')
             .then((response) => response.json())
             .then((data) => {
@@ -227,8 +249,7 @@ function initLiveMap(targetElementId, center, zoom) {
                     departureTime: formatTimeFromSeconds(pilot.flightPlan.departureTime),
                     arrivalTime: formatTimeFromSeconds(pilot.flightPlan.departureTime + pilot.flightPlan.eet),
                 }))
-            })
-            .then(renderAircraftsOnMap),
+            }),
         fetch('https://data.vatsim.net/v3/vatsim-data.json')
             .then((response) => response.json())
             .then((data) => {
@@ -247,12 +268,23 @@ function initLiveMap(targetElementId, center, zoom) {
                     departureTime: pilot.flight_plan.deptime,
                     arrivalTime: addZuluTimes(pilot.flight_plan.deptime, pilot.flight_plan.enroute_time),
                 }))
-            })
-            .then(renderAircraftsOnMap)
-    ])
-        .then(async ([ivaoPilots, vatsimPilots]) => {
-            const pilots = ivaoPilots.concat(vatsimPilots)
-                .sort((a, b) => Number(a.departureTime) - Number(b.departureTime))
-            initFlipFlapBoard(pilots)
-        })
+            }),
+    ]
+}
+
+function initLiveMap(targetElementId, center, zoom) {
+    const targetElement = document.getElementById(targetElementId);
+    targetElement.style.height = '100%';
+    targetElement.style.width = '100%';
+
+    const map = L.map(targetElementId, {
+        fullscreenControl: true,
+    }).setView(center, zoom);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    }).addTo(map);
+
+    return map
 }

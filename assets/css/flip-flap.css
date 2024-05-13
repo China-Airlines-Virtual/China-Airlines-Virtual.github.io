@@ -5,6 +5,8 @@
   font-style: normal;
   color: #dedede;
 
+  user-select: none;
+
   position: relative;
   background-color: #414346;
   height: 250px;
