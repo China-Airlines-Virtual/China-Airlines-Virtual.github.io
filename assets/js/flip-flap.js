@@ -1,44 +1,18 @@
-function createFlipFlapBoard(stringRows) {
-  let cycle = {};
+function makeCycle(str) {
+  const arr = str.split('');
+  return arr.reduce((cycle, letter, i) => {
+    cycle[letter] = arr[(i + 1) % arr.length];
+    return cycle;
+  }, {});
+}
 
-  cycle['A'] = 'B';
-  cycle['B'] = 'C';
-  cycle['C'] = 'D';
-  cycle['D'] = 'E';
-  cycle['E'] = 'F';
-  cycle['F'] = 'G';
-  cycle['G'] = 'H';
-  cycle['H'] = 'I';
-  cycle['I'] = 'J';
-  cycle['J'] = 'K';
-  cycle['K'] = 'L';
-  cycle['L'] = 'M';
-  cycle['M'] = 'N';
-  cycle['N'] = 'O';
-  cycle['O'] = 'P';
-  cycle['P'] = 'Q';
-  cycle['Q'] = 'R';
-  cycle['R'] = 'S';
-  cycle['S'] = 'T';
-  cycle['T'] = 'U';
-  cycle['U'] = 'V';
-  cycle['V'] = 'W';
-  cycle['W'] = 'X';
-  cycle['X'] = 'Y';
-  cycle['Y'] = 'Z';
-  cycle['Z'] = '0';
-  cycle['0'] = '1';
-  cycle['1'] = '2';
-  cycle['2'] = '3';
-  cycle['3'] = '4';
-  cycle['4'] = '5';
-  cycle['5'] = '6';
-  cycle['6'] = '7';
-  cycle['7'] = '8';
-  cycle['8'] = '9';
-  cycle['9'] = 'A';
-  cycle[' '] = 'A';
+const charCycle = makeCycle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ')
+const numericCycle = makeCycle('0123456789 ')
 
+function createFlipFlapBoard(
+  stringRows,
+  width
+) {
   let rows = d3.select('#flip-flap')
     .selectAll('.flip-flap-row')
     .data(stringRows)
@@ -52,7 +26,13 @@ function createFlipFlapBoard(stringRows) {
     .enter()
     .append('div')
     .attr('class', 'flap')
-    .style('left', (d, i) => i * 16 + 'px');
+    .style('left', (d, i) => {
+      let offset = (i >= (width - 8)) ? 8 : 0
+      offset += (i >= (width - 6)) ? 3 : 0
+      offset += (i >= (width - 4)) ? 8 : 0
+      offset += (i >= (width - 2)) ? 3 : 0
+      return i * 12 + offset + 'px'
+    });
 
   ['next', 'prev', 'back', 'front'].forEach(d => {
     if (d === 'front') {
@@ -77,15 +57,20 @@ function createFlipFlapBoard(stringRows) {
         .each(function (fromLetter, i) {
           let toLetter = stringRows[0][i],
             flap = d3.select(this);
+          const isNumericOnly = i >= 35;
           if (fromLetter !== toLetter) {
-            q.defer(flipLetter, flap.datum(toLetter), fromLetter, toLetter, isFast);
+            q.defer(
+              flipLetter,
+              flap.datum(toLetter), fromLetter, toLetter, isNumericOnly, isFast
+            );
           }
         });
       stringRows.push(stringRows.shift());
     });
   }
 
-  function flipLetter(flap, fromLetter, toLetter, isFast, cb) {
+  function flipLetter(flap, fromLetter, toLetter, isNumericOnly, isFast, cb) {
+    const cycle = (isNumericOnly) ? numericCycle : charCycle;
     let current = fromLetter,
       next = cycle[fromLetter],
       prevFlaps = flap.selectAll('.prev span, .front span'),

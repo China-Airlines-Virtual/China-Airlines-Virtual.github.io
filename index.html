@@ -38,10 +38,11 @@
     rel='stylesheet' />
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="assets/css/flip-flap.css" rel="stylesheet">
@@ -317,10 +318,12 @@
         <div class="col-xl-8 col-lg-6 col-md-5 mt-12 mt-md-0">
           <div id="live-map" style="min-height: 250px"></div>
         </div>
-        <div class="flip-flap-board col-xl-4 col-lg-6 col-md-7 mt-12 mt-md-0">
-          <div>　　班次　　　　　出發　　　飛往　　出發時間　抵達時間</div>
-          <div id="flip-flap"></div>
-          <div class="flip-flap-board-footer">本欄資訊僅提供 "VATSIM" 與 "IVAO" 線上航班資訊</div>
+        <div class="col-xl-4 col-lg-6 col-md-7 mt-12 mt-md-0">
+          <div class="flip-flap-board">
+            <div id="flip-flap-header">　　班次　　　　　　出發　　　　　　　　飛往　　　　　離場　　抵達</div>
+            <div id="flip-flap"></div>
+            <div class="flip-flap-board-footer">本欄資訊僅提供 "VATSIM" 與 "IVAO" 台灣航班</div>
+          </div>
         </div>
       </div>
     </section><!-- End Departments Section -->

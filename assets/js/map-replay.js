@@ -100,6 +100,66 @@ function initMapReplay(targetElementId, timelineName, center, zoom, members) {
         });
 }
 
+let airportCityMap = null
+const isIcaoVersion = !window.matchMedia('(min-width: 1200px)').matches
+const FLAPS_PER_ROW = (isIcaoVersion) ? 25 : 43
+
+function padAndSlice(str, length) {
+    return str.padEnd(length).slice(0, length)
+}
+
+function replaceNonAlphabetAndNumericWithSpace(str) {
+    return str.replace(/[^A-Z0-9]/g, ' ')
+}
+
+async function initFlipFlapBoard(pilots) {
+    document.getElementById('flip-flap-header').innerText = (isIcaoVersion)
+        ? '　　班次　　出發　　飛往　 離場　　抵達'
+        : '　　班次　　　　　　出發　　　　　　　　飛往　　　　　離場　　抵達'
+    const updateFlipFlapBoar = createFlipFlapBoard(
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => ''.padEnd(FLAPS_PER_ROW)),
+        FLAPS_PER_ROW
+    )
+
+    if (!isIcaoVersion && airportCityMap === null) {
+        airportCityMap = await fetch('assets/airports.csv')
+            .then((resp) => resp.text())
+            .then((data) => {
+                const results = Papa.parse(data)
+                const newAirportCityMap = new Map()
+                results.data
+                    .filter((row) => row[0].trim() !== '')
+                    .forEach(
+                        (row) => newAirportCityMap.set(
+                            row[0].trim(),
+                            row[1].trim().toUpperCase().slice(0, 13)
+                        )
+                    )
+                return newAirportCityMap
+            })
+    }
+
+    const stringRows = pilots.map((pilot) => {
+        const departureCity = (isIcaoVersion)
+            ? pilot.departure
+            : replaceNonAlphabetAndNumericWithSpace(
+                airportCityMap.get(pilot.departure) || pilot.departure
+            )
+        const arrivalCity = (isIcaoVersion)
+            ? pilot.arrival
+            : replaceNonAlphabetAndNumericWithSpace(
+                airportCityMap.get(pilot.arrival) || pilot.arrival
+            )
+        const airportWidth = (isIcaoVersion) ? 4 : 13
+        return padAndSlice(pilot.callsign, 7) + ' ' +
+            padAndSlice(departureCity, airportWidth) + ' ' +
+            padAndSlice(arrivalCity, airportWidth) +
+            padAndSlice(pilot.departureTime, 4) +
+            padAndSlice(pilot.arrivalTime, 4)
+    }).map(d => padAndSlice(d, FLAPS_PER_ROW));
+    updateFlipFlapBoar(stringRows, true)
+}
+
 function initLiveMap(targetElementId, center, zoom) {
     const targetElement = document.getElementById(targetElementId);
     targetElement.style.height = '100%';
@@ -134,7 +194,6 @@ function initLiveMap(targetElementId, center, zoom) {
     }
 
     function formatTimeFromSeconds(time) {
-        console.log(time)
         const inHours = time / 3600
         const hours = Math.floor(inHours)
         const hoursStr = String(Math.floor(inHours)).padStart(2, 0)
@@ -149,9 +208,6 @@ function initLiveMap(targetElementId, center, zoom) {
         return `${hours}${minutes}`
     }
 
-    const updateFlipFlapBoar = createFlipFlapBoard(
-        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => ''.padEnd(27))
-    )
     Promise.all([
         fetch('https://api.ivao.aero/v2/tracker/whazzup')
             .then((response) => response.json())
@@ -194,12 +250,9 @@ function initLiveMap(targetElementId, center, zoom) {
             })
             .then(renderAircraftsOnMap)
     ])
-        .then(([ivaoPilots, vatsimPilots]) => {
+        .then(async ([ivaoPilots, vatsimPilots]) => {
             const pilots = ivaoPilots.concat(vatsimPilots)
                 .sort((a, b) => Number(a.departureTime) - Number(b.departureTime))
-            const stringRows = pilots.map((pilot) =>
-                `${pilot.callsign.padEnd(7)} ${pilot.departure} ${pilot.arrival} ${pilot.departureTime} ${pilot.arrivalTime}`
-            ).map(d => d.padEnd(27));
-            updateFlipFlapBoar(stringRows, true)
+            initFlipFlapBoard(pilots)
         })
 }
