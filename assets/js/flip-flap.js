@@ -28,10 +28,11 @@ function createFlipFlapBoard(
     .append('div')
     .attr('class', 'flap')
     .style('left', (d, i) => {
-      let offset = (i >= (width - 8)) ? 8 : 0
-      offset += (i >= (width - 6)) ? 3 : 0
-      offset += (i >= (width - 4)) ? 8 : 0
-      offset += (i >= (width - 2)) ? 3 : 0
+      let offset = (i >= (width - 16)) ? 8 : 0
+      offset += (i >= (width - 14)) ? 3 : 0
+      offset += (i >= (width - 12)) ? 8 : 0
+      offset += (i >= (width - 10)) ? 3 : 0
+      offset += (i >= (width - 8)) ? 8 : 0
       return i * 12 + offset + 'px'
     });
 
@@ -72,7 +73,7 @@ function createFlipFlapBoard(
         .each(function (fromLetter, i) {
           let toLetter = stringRows[0][i],
             flap = d3.select(this);
-          const isNumericOnly = i >= 35;
+          const isNumericOnly = i >= 35 && i < 43;
           if (fromLetter !== toLetter) {
             q.defer(
               flipLetter,

@@ -101,7 +101,7 @@ function initMapReplay(targetElementId, timelineName, center, zoom, members) {
 
 let airportCityMap = null
 const isIcaoVersion = !window.matchMedia('(min-width: 1200px)').matches
-const FLAPS_PER_ROW = (isIcaoVersion) ? 25 : 43
+const FLAPS_PER_ROW = (isIcaoVersion) ? 25 : 56
 
 function padAndSlice(str, length) {
     return str.padEnd(length).slice(0, length)
@@ -132,7 +132,7 @@ async function loadAirportCityMap() {
 async function initFlipFlapBoard() {
     document.getElementById('flip-flap-header').innerText = (isIcaoVersion)
         ? '　　班次　　出發　　目的地 離場　　抵達'
-        : '　　班次　　　　　　出發　　　　　　　　目的地　　　　離場　　抵達 登機'
+        : '　　班次　　 機型　　　　　出發　　　　　　　　目的地　　　　　離場 　抵達　　　備註　　登機'
     const updateFlipFlapBoard = createFlipFlapBoard(
         11,
         FLAPS_PER_ROW
@@ -144,22 +144,26 @@ async function initFlipFlapBoard() {
 
     return function (pilots) {
         const stringRows = pilots.map((pilot) => {
-            const departureCity = (isIcaoVersion)
-                ? pilot.departure
-                : replaceNonAlphabetAndNumericWithSpace(
-                    airportCityMap.get(pilot.departure) || pilot.departure
-                )
-            const arrivalCity = (isIcaoVersion)
-                ? pilot.arrival
-                : replaceNonAlphabetAndNumericWithSpace(
-                    airportCityMap.get(pilot.arrival) || pilot.arrival
-                )
-            const airportWidth = (isIcaoVersion) ? 4 : 13
+            if (isIcaoVersion) {
+                return padAndSlice(pilot.callsign, 7) + ' ' +
+                    padAndSlice(pilot.departure, 4) + ' ' +
+                    padAndSlice(pilot.arrival, 4) +
+                    padAndSlice(pilot.departureTime, 4) +
+                    padAndSlice(pilot.arrivalTime, 4)
+            }
+            const departureCity = replaceNonAlphabetAndNumericWithSpace(
+                airportCityMap.get(pilot.departure) || pilot.departure
+            )
+            const arrivalCity = replaceNonAlphabetAndNumericWithSpace(
+                airportCityMap.get(pilot.arrival) || pilot.arrival
+            )
             return padAndSlice(pilot.callsign, 7) + ' ' +
-                padAndSlice(departureCity, airportWidth) + ' ' +
-                padAndSlice(arrivalCity, airportWidth) +
+                padAndSlice(pilot.aircraftId, 4) + ' ' +
+                padAndSlice(departureCity, 13) + ' ' +
+                padAndSlice(arrivalCity, 13) +
                 padAndSlice(pilot.departureTime, 4) +
-                padAndSlice(pilot.arrivalTime, 4)
+                padAndSlice(pilot.arrivalTime, 4) +
+                padAndSlice(pilot.state, 8)
         }).map(d => padAndSlice(d, FLAPS_PER_ROW));
         const blinkRows = pilots.map((pilot) => !!pilot.isBoarding)
         updateFlipFlapBoard(stringRows, blinkRows, true)
@@ -241,6 +245,7 @@ function getOnlinePilots(map) {
                     platform: 'IVAO',
                     callsign: pilot.callsign,
                     userId: pilot.userId,
+                    aircraftId: pilot.flightPlan.aircraftId,
                     latitude: pilot.lastTrack.latitude,
                     longitude: pilot.lastTrack.longitude,
                     heading: pilot.lastTrack.heading,
@@ -248,6 +253,7 @@ function getOnlinePilots(map) {
                     arrival: pilot.flightPlan.arrivalId,
                     departureTime: formatTimeFromSeconds(pilot.flightPlan.departureTime),
                     arrivalTime: formatTimeFromSeconds(pilot.flightPlan.departureTime + pilot.flightPlan.eet),
+                    state: pilot.lastTrack.state.toUpperCase(),
                     isBoarding: pilot.lastTrack.state === 'Boarding',
                 }))
             }),
@@ -261,6 +267,7 @@ function getOnlinePilots(map) {
                     platform: 'VATSIM',
                     callsign: pilot.callsign,
                     userId: pilot.cid,
+                    aircraftId: pilot.flight_plan.aircraft_short,
                     latitude: pilot.latitude,
                     longitude: pilot.longitude,
                     heading: pilot.heading,
@@ -268,6 +275,7 @@ function getOnlinePilots(map) {
                     arrival: pilot.flight_plan.arrival,
                     departureTime: pilot.flight_plan.deptime,
                     arrivalTime: addZuluTimes(pilot.flight_plan.deptime, pilot.flight_plan.enroute_time),
+                    state: (pilot.groundspeed > 60) ? 'EN ROUTE' : '',
                     isBoarding: false,
                 }))
             }),
