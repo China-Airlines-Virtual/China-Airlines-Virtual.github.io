@@ -39,6 +39,16 @@
   right: auto;
   position: absolute;
 }
+.flap:nth-last-of-type(3),
+.flap:nth-last-of-type(4),
+.flap:nth-last-of-type(5),
+.flap:nth-last-of-type(6),
+.flap:nth-last-of-type(7),
+.flap:nth-last-of-type(8),
+.flap:nth-last-of-type(9),
+.flap:nth-last-of-type(10) {
+  color: #f5d700;
+}
 .half {
   height: 8px;
   width: 12px;
