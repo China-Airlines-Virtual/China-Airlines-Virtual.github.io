@@ -73,7 +73,7 @@ function createFlipFlapBoard(
         .each(function (fromLetter, i) {
           let toLetter = stringRows[0][i],
             flap = d3.select(this);
-          const isNumericOnly = i >= 35 && i < 43;
+          const isNumericOnly = i >= 40 && i < 48;
           if (fromLetter !== toLetter) {
             q.defer(
               flipLetter,
