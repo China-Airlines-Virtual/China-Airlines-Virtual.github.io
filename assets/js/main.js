@@ -367,7 +367,7 @@
       new PureCounter({
         selector: "#purecounter-time",
         start: 0,
-        end: data.trackedTime,
+        end: Math.floor(data.trackedTime / 60),
         duration: 1,
       })
 
