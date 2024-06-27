@@ -224,16 +224,16 @@
       return results.data
         .filter((row) => row[0].trim() !== '')
         .map((row) => ({
-          name: row[0].trim(),
-          nickname: row[1].trim() || null,
-          title: row[2].trim(),
-          callsign: row[3].trim(),
-          joinDate: row[4].trim() || null,
-          avatarFileName: row[5].trim() || null,
-          vid: row[6].trim() || null,
-          vatsimId: row[7].trim() || null,
-          youtubeChannel: row[8].trim() || null,
-          instagramId: row[9].trim() || null,
+          name: row[1].trim(),
+          nickname: row[2].trim() || null,
+          title: row[3].trim(),
+          callsign: row[4].trim(),
+          joinDate: row[5].trim() || null,
+          avatarFileName: row[6].trim() || null,
+          vid: row[7].trim() || null,
+          vatsimId: row[8].trim() || null,
+          youtubeChannel: row[9].trim() || null,
+          instagramId: row[10].trim() || null,
         }))
     })
     .then((data) => {
