@@ -23,7 +23,11 @@ function initMapReplay(targetElementId, timelineName, center, zoom, members) {
     targetElement.style.height = '100%';
     targetElement.style.width = '100%';
 
-    const map = L.map(targetElementId).setView(center, zoom);
+    const map = L.map(targetElementId,
+        {
+            scrollWheelZoom: false
+        }
+    ).setView(center, zoom);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -88,9 +92,9 @@ function initMapReplay(targetElementId, timelineName, center, zoom, members) {
                 }
 
                 if (tick % 25 === 0) {
-                    for (const cid in markerMap) {
+                    for (const [cid, marker] of markerMap.entries()) {
                         if (lastSeenTick[cid] !== undefined && lastSeenTick[cid] < tick - 25) {
-                            map.removeLayer(markerMap[cid]);
+                            map.removeLayer(marker);
                             delete markerMap[cid];
                         }
                     }
