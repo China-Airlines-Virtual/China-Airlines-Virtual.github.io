@@ -46,13 +46,27 @@ function initMapReplay(targetElementId, timelineName, center, zoom, members) {
             const intervalId = setInterval(() => {
                 const tickData = data[timelineKey[tick]];
                 for (const pilot of tickData) {
+                    if (pilot.callsign === 'MAP_CONTROL') {
+                        console.log('found map control', pilot);
+                        map.fitBounds([
+                            {lat: pilot.latitude, lng: pilot.longitude},
+                            {lat: pilot.latitude2, lng: pilot.longitude2}
+                        ]);
+                        continue;
+                    }
+
+
                     if (markerMap.has(pilot.cid)) {
-                        markerMap.get(pilot.cid).setLatLng([pilot.latitude, pilot.longitude]);
-                        markerMap.get(pilot.cid)
-                            ._icon
-                            .querySelector('.marker-icon')
-                            .style
-                            .transform = `rotate(${pilot.heading}deg)`
+                        try {
+                            markerMap.get(pilot.cid).setLatLng([pilot.latitude, pilot.longitude]);
+                            markerMap.get(pilot.cid)
+                                ._icon
+                                .querySelector('.marker-icon')
+                                .style
+                                .transform = `rotate(${pilot.heading}deg)`
+                        } catch (e) {
+                        }
+
                     } else {
                         // Build popup
                         const callsign = document.createElement('div')
