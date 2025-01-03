@@ -109,7 +109,7 @@ function initMapReplay(targetElementId, timelineName, center, zoom, members) {
                     for (const [cid, marker] of markerMap.entries()) {
                         if (lastSeenTick[cid] !== undefined && lastSeenTick[cid] < tick - 25) {
                             map.removeLayer(marker);
-                            delete markerMap[cid];
+                            markerMap.delete(cid);
                         }
                     }
                 }
