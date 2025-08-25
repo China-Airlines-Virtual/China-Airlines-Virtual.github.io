@@ -99,21 +99,7 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
     <div class="hero-cover">
-      <video id="hero-video" poster="assets/img/hero-bg.jpg" autoplay muted loop playsinline style="width:100%; height:auto;" preload="auto"></video>
-      <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          var video = document.getElementById('hero-video');
-          var hlsSrc = 'https://crew.china-airlines-virtual.com/calva-image/calva-promo/playlist.m3u8';
-          if (window.Hls && Hls.isSupported()) {
-            var hls = new Hls();
-            hls.loadSource(hlsSrc);
-            hls.attachMedia(video);
-          } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = hlsSrc;
-          }
-        });
-      </script>
+      <video src="https://crew.china-airlines-virtual.com/calva-image/cal_promo_480.mp4" poster="assets/img/hero-bg.jpg" autoplay muted loop playsinline style="width:100%; height:auto;"></video>
       <div class="mask"></div>
     </div>
     <div class="container">
