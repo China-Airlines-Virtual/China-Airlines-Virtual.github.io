@@ -302,6 +302,9 @@ function getOnlinePilots(map) {
 
 function initLiveMap(targetElementId, center, zoom) {
     const targetElement = document.getElementById(targetElementId);
+    if (!targetElement) {
+        return;
+    }
     targetElement.style.height = '100%';
     targetElement.style.width = '100%';
 

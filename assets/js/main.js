@@ -352,7 +352,7 @@
 
 
       // Initiate map replay
-      initMapReplay('map-replay', 'assets/timeline/timeline-20250202.json', { lat: 24.0, lon: 116.7 }, 6, data);
+      initMapReplay('map-replay', 'assets/timeline/timeline-20250628.json', { lat: 24.0, lon: 116.7 }, 6, data);
     })
 
   fetch('assets/statistics.json')
