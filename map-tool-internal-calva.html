@@ -159,6 +159,26 @@
               <button id="calculate-dms-btn" class="btn btn-info" style="margin-top: 10px;">Calculate</button>
               <div id="dms-result" style="margin-top: 10px; font-family: 'Roboto Mono', monospace;"></div>
           </div>
+            <div id="projection-calculator" style="margin-top: 20px; padding: 15px; border: 1px solid #ddd;">
+                <h4>Point Projection Calculator</h4>
+                <div class="form-group">
+                    <label for="projection-start-dms">Start Point DMS (e.g., N025.04.43.984 E121.14.03.158)</label>
+                    <input type="text" id="projection-start-dms" class="form-control" value="N025.04.43.984 E121.14.03.158">
+                </div>
+                <div class="form-group mt-2">
+                    <label for="projection-heading">Heading (degrees)</label>
+                    <input type="number" id="projection-heading" class="form-control" value="49.17">
+                </div>
+                <div class="form-group mt-2">
+                    <label for="projection-points">Points to Project (one DMS pair per line)</label>
+                    <textarea id="projection-points" class="form-control" rows="5">
+                        N025.04.48.005 E121.14.10.287
+
+                    </textarea>
+                </div>
+                <button id="calculate-projection-btn" class="btn btn-info" style="margin-top: 10px;">Calculate Projection</button>
+                <div id="projection-result" style="margin-top: 10px; font-family: 'Roboto Mono', monospace;"></div>
+            </div>
         </div>
     </div>
 <!--  </section>-->

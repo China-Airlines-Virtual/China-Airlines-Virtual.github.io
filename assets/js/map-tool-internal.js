@@ -417,6 +417,84 @@ if (typeof window !== 'undefined') {
         const drawAreaBtn = document.getElementById('draw-area-btn');
         if (drawAreaBtn) drawAreaBtn.addEventListener('click', drawAreaFromTextarea);
 
+        const calcProjectionBtn = document.getElementById('calculate-projection-btn');
+        if (calcProjectionBtn) calcProjectionBtn.addEventListener('click', calculateProjection);
+
         updateLineHistory();
     });
 }
+
+function calculateProjection() {
+    const startDMS = document.getElementById('projection-start-dms').value;
+    const heading = parseFloat(document.getElementById('projection-heading').value);
+    const pointsData = document.getElementById('projection-points').value;
+    const resultDiv = document.getElementById('projection-result');
+
+    if (!startDMS || isNaN(heading) || !pointsData) {
+        resultDiv.textContent = 'Invalid input. Please fill all fields.';
+        return;
+    }
+
+    const startParts = startDMS.trim().split(/\s+/);
+    if (startParts.length !== 2) {
+        resultDiv.textContent = 'Invalid Start Point DMS format.';
+        return;
+    }
+
+    const startLat = parseCoord(startParts[0]);
+    const startLon = parseCoord(startParts[1]);
+
+    if (startLat === null || startLon === null) {
+        resultDiv.textContent = 'Invalid coordinate format in Start Point DMS.';
+        return;
+    }
+
+    const R = 6371000; // Earth radius in meters
+    function calculateDestination(lat, lon, bearing, distance) {
+        const latRad = lat * Math.PI / 180;
+        const lonRad = lon * Math.PI / 180;
+        const bearingRad = bearing * Math.PI / 180;
+
+        const lat2Rad = Math.asin(Math.sin(latRad) * Math.cos(distance / R) +
+            Math.cos(latRad) * Math.sin(distance / R) * Math.cos(bearingRad));
+        const lon2Rad = lonRad + Math.atan2(Math.sin(bearingRad) * Math.sin(distance / R) * Math.cos(latRad),
+            Math.cos(distance / R) - Math.sin(latRad) * Math.sin(lat2Rad));
+
+        return [lat2Rad * 180 / Math.PI, lon2Rad * 180 / Math.PI];
+    }
+
+    // Create a second point to define the line for projection
+    const [endLat, endLon] = calculateDestination(startLat, startLon, heading, 10000); // 10km away
+
+    const linePoints = [L.latLng(startLat, startLon), L.latLng(endLat, endLon)];
+    const p1 = map.latLngToLayerPoint(linePoints[0]);
+    const p2 = map.latLngToLayerPoint(linePoints[1]);
+
+    const pointLines = pointsData.split('\n');
+    const projectedPoints = pointLines.map(line => {
+        const trimmedLine = line.trim();
+        if (!trimmedLine) return null;
+        const parts = trimmedLine.split(':');
+        if (parts.length < 2) return null;
+
+        const pointLat = parseCoord(parts[0]);
+        const pointLon = parseCoord(parts[1]);
+
+        if (pointLat === null || pointLon === null) return `Invalid point: ${line}`;
+
+        const pointLatLng = L.latLng(pointLat, pointLon);
+        const p = map.latLngToLayerPoint(pointLatLng);
+
+        // Use L.LineUtil.closestPointOnSegment which effectively projects the point onto the line segment
+        const closestPoint = L.LineUtil.closestPointOnSegment(p, p1, p2);
+        const closestLatLng = map.layerPointToLatLng(closestPoint);
+
+        return `${toDMS(closestLatLng.lat, true)}:${toDMS(closestLatLng.lng, false)}:${parts[2]}:${parts[3]}`;
+    }).filter(Boolean);
+
+    resultDiv.innerHTML = projectedPoints.join('<br>');
+}
+
+let lineStart = null;
+let drawnLineLayer = null;
+let nearestPointMarker = null;
