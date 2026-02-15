@@ -420,8 +420,59 @@ if (typeof window !== 'undefined') {
         const calcProjectionBtn = document.getElementById('calculate-projection-btn');
         if (calcProjectionBtn) calcProjectionBtn.addEventListener('click', calculateProjection);
 
+        const calcDestinationBtn = document.getElementById('calculate-destination-btn');
+        if (calcDestinationBtn) calcDestinationBtn.addEventListener('click', calculateDestinationPoint);
+
         updateLineHistory();
     });
+}
+
+function calculateDestinationPoint() {
+    debugger;
+    const startDMS = document.getElementById('destination-start-dms').value;
+    const heading = parseFloat(document.getElementById('destination-heading').value);
+    const distance = parseFloat(document.getElementById('destination-distance').value);
+    const resultDiv = document.getElementById('destination-result');
+
+    if (!startDMS || isNaN(heading) || isNaN(distance)) {
+        resultDiv.textContent = 'Invalid input. Please fill all fields.';
+        return;
+    }
+
+    const startParts = startDMS.trim().split(/\s+/);
+    if (startParts.length !== 2) {
+        resultDiv.textContent = 'Invalid Start Point DMS format.';
+        return;
+    }
+
+    const startLat = parseCoord(startParts[0]);
+    const startLon = parseCoord(startParts[1]);
+
+    if (startLat === null || startLon === null) {
+        resultDiv.textContent = 'Invalid coordinate format in Start Point DMS.';
+        return;
+    }
+
+    const R = 6371000; // Earth radius in meters
+    function calculateDestination(lat, lon, bearing, distance) {
+        const latRad = lat * Math.PI / 180;
+        const lonRad = lon * Math.PI / 180;
+        const bearingRad = bearing * Math.PI / 180;
+
+        const lat2Rad = Math.asin(Math.sin(latRad) * Math.cos(distance / R) +
+            Math.cos(latRad) * Math.sin(distance / R) * Math.cos(bearingRad));
+        const lon2Rad = lonRad + Math.atan2(Math.sin(bearingRad) * Math.sin(distance / R) * Math.cos(latRad),
+            Math.cos(distance / R) - Math.sin(latRad) * Math.sin(lat2Rad));
+
+        return [lat2Rad * 180 / Math.PI, lon2Rad * 180 / Math.PI];
+    }
+
+    const [destLat, destLon] = calculateDestination(startLat, startLon, heading, distance);
+
+    const destLatDMS = toDMS(destLat, true);
+    const destLonDMS = toDMS(destLon, false);
+
+    resultDiv.innerHTML = `Destination Point: ${destLatDMS} ${destLonDMS}`;
 }
 
 function calculateProjection() {
