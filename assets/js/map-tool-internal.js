@@ -437,9 +437,110 @@ if (typeof window !== 'undefined') {
         const calcDestinationBtn = document.getElementById('calculate-destination-btn');
         if (calcDestinationBtn) calcDestinationBtn.addEventListener('click', calculateDestinationPoint);
 
+        const drawCircleBtn = document.getElementById('draw-circle-btn');
+        if (drawCircleBtn) drawCircleBtn.addEventListener('click', drawCircleWithCoords);
+
         updateLineHistory();
     });
 }
+
+function drawCircle() {
+    const centerDMS = document.getElementById('circle-center-dms').value;
+    const radius = parseFloat(document.getElementById('circle-radius').value);
+    const resultDiv = document.getElementById('circle-result');
+
+    if (!centerDMS || isNaN(radius)) {
+        resultDiv.textContent = 'Invalid input. Please fill all fields.';
+        return;
+    }
+
+    const centerParts = centerDMS.trim().split(/\s+/);
+    if (centerParts.length !== 2) {
+        resultDiv.textContent = 'Invalid Center Point DMS format.';
+        return;
+    }
+
+    const centerLat = parseCoord(centerParts[0]);
+    const centerLon = parseCoord(centerParts[1]);
+
+    if (centerLat === null || centerLon === null) {
+        resultDiv.textContent = 'Invalid coordinate format in Center Point DMS.';
+        return;
+    }
+
+    L.circle([centerLat, centerLon], { radius: radius }).addTo(map);
+    resultDiv.textContent = `Circle drawn at ${centerDMS} with radius ${radius}m.`;
+}
+
+function drawCircleWithCoords() {
+    const centerDMS = document.getElementById('circle-center-dms').value;
+    const radius = parseFloat(document.getElementById('circle-radius').value);
+    const outputFormat = document.getElementById('circle-output-format').value;
+    const resultDiv = document.getElementById('circle-result');
+
+    if (!centerDMS || isNaN(radius)) {
+        resultDiv.textContent = 'Invalid input. Please fill all fields.';
+        return;
+    }
+
+    const centerParts = centerDMS.trim().split(/\s+/);
+    if (centerParts.length !== 2) {
+        resultDiv.textContent = 'Invalid Center Point DMS format.';
+        return;
+    }
+
+    const centerLat = parseCoord(centerParts[0]);
+    const centerLon = parseCoord(centerParts[1]);
+
+    if (centerLat === null || centerLon === null) {
+        resultDiv.textContent = 'Invalid coordinate format in Center Point DMS.';
+        return;
+    }
+
+    const R = 6371000; // Earth radius in meters
+    function calculateDestination(lat, lon, bearing, distance) {
+        const latRad = lat * Math.PI / 180;
+        const lonRad = lon * Math.PI / 180;
+        const bearingRad = bearing * Math.PI / 180;
+
+        const lat2Rad = Math.asin(Math.sin(latRad) * Math.cos(distance / R) +
+            Math.cos(latRad) * Math.sin(distance / R) * Math.cos(bearingRad));
+        const lon2Rad = lonRad + Math.atan2(Math.sin(bearingRad) * Math.sin(distance / R) * Math.cos(latRad),
+            Math.cos(distance / R) - Math.sin(latRad) * Math.sin(lat2Rad));
+
+        return [lat2Rad * 180 / Math.PI, lon2Rad * 180 / Math.PI];
+    }
+
+    const points = [];
+    for (let i = 0; i <= 360; i++) {
+        const [lat, lon] = calculateDestination(centerLat, centerLon, i, radius);
+        points.push([lat, lon]);
+    }
+
+    let coordsString = '';
+    if (outputFormat === 'line_with_line') {
+        const lines = [];
+        for (let i = 0; i < 360; i++) {
+            const p1 = points[i];
+            const p2 = points[i+1];
+            const line = `LINE:${toDMS(p1[0], true)}:${toDMS(p1[1], false)}:${toDMS(p2[0], true)}:${toDMS(p2[1], false)}`;
+            lines.push(line);
+        }
+        coordsString = lines.join('\n');
+    } else if (outputFormat === 'line_with_type') {
+        const lines = [];
+        for (let i = 0; i < 360; i++) {
+            const p1 = points[i];
+            const p2 = points[i+1];
+            const line = `${toDMS(p1[0], true)} ${toDMS(p1[1], false)} ${toDMS(p2[0], true)} ${toDMS(p2[1], false)} TYPEEE`;
+            lines.push(line);
+        }
+        coordsString = lines.join('\n');
+    }
+
+    resultDiv.innerHTML = `<textarea style="width:100%; height: 150px;">${coordsString}</textarea>`;
+}
+
 
 function calculateDestinationPoint() {
     const startDMS = document.getElementById('destination-start-dms').value;

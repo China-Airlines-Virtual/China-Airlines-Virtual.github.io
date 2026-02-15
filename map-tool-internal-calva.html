@@ -203,6 +203,26 @@
                 <button id="calculate-destination-btn" class="btn btn-info" style="margin-top: 10px;">Calculate Destination</button>
                 <div id="destination-result" style="margin-top: 10px; font-family: 'Roboto Mono', monospace;"></div>
             </div>
+            <div id="circle-drawer" style="margin-top: 20px; padding: 15px; border: 1px solid #ddd;">
+                <h4>Draw Circle</h4>
+                <div class="form-group">
+                    <label for="circle-center-dms">Center Point DMS (e.g., N025.04.43.984 E121.14.03.158)</label>
+                    <input type="text" id="circle-center-dms" class="form-control" placeholder="N025.04.43.984 E121.14.03.158">
+                </div>
+                <div class="form-group mt-2">
+                    <label for="circle-radius">Radius (meters)</label>
+                    <input type="number" id="circle-radius" class="form-control" placeholder="100">
+                </div>
+                <div class="form-group mt-2">
+                    <label for="circle-output-format">Output Format</label>
+                    <select id="circle-output-format" class="form-control">
+                        <option value="line_with_type">版本一 空白</option>
+                        <option value="line_with_line">版本二 LINE開頭</option>
+                    </select>
+                </div>
+                <button id="draw-circle-btn" class="btn btn-info" style="margin-top: 10px;">Draw Circle</button>
+                <div id="circle-result" style="margin-top: 10px; font-family: 'Roboto Mono', monospace;"></div>
+            </div>
         </div>
     </div>
 <!--  </section>-->
