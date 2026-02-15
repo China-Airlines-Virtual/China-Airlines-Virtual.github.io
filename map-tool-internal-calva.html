@@ -89,7 +89,6 @@
       <div class="row gy-4">
         <div class="col-lg-12">
           <h3>地圖</h3>
-            <img class="overlay-image" src="https://media.discordapp.net/attachments/868725828807172146/1471896003945824369/20260213_210942.jpg?ex=69909979&is=698f47f9&hm=36da11900c53ac142567680519e8e210ef806d3c69d07aa8f6bac88fdff4ccd8&=&format=webp&width=720&height=960">
 
           <div id="map-replay" style="height: 600px"></div>
           點點的位子：<div id="marker-coord-display" style="font-family: 'Roboto Mono', monospace; font-size: 1.2em; margin-top: 10px;"></div>
@@ -109,12 +108,20 @@
           <div class="tab-content">
             <div class="tab-pane active" id="line-tool" role="tabpanel" aria-labelledby="line-tool-tab" style="padding: 15px; border: 1px solid #ddd; border-top: none;">
               <div style="margin-top: 10px;">
+                  <label for="data-input" class="form-label">Paste your data here...</label>
                   <textarea id="data-input" rows="10" style="width: 100%; font-family: 'Roboto Mono', monospace;" placeholder="Paste your data here..."></textarea>
 
                   <button id="parse-data-btn" class="btn btn-success" style="margin-top: 5px;">Parse Data</button>
               </div>
+              <div class="form-check" style="margin-top: 10px;">
+                <input class="form-check-input" type="checkbox" value="" id="show-line-markers">
+                <label class="form-check-label" for="show-line-markers">
+                    Show Markers for points
+                </label>
+              </div>
               <button id="draw-next-line-btn" class="btn btn-primary" style="margin-top: 10px; display: none;">Draw Next Line</button>
               <button id="draw-all-lines-btn" class="btn btn-primary" style="margin-top: 10px; display: none;">Draw All Lines</button>
+              <label for="line-history" class="form-label">Line History</label>
               <textarea id="line-history" style="margin-top: 10px; font-family: 'Roboto Mono', monospace; width: 100%;" rows="10" readonly></textarea>
             </div>
             <div class="tab-pane" id="area-tool" role="tabpanel" aria-labelledby="area-tool-tab" style="padding: 15px; border: 1px solid #ddd; border-top: none;">

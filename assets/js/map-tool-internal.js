@@ -60,7 +60,7 @@ function updateMarkerCoordDisplay(lat, lng) {
     }
 }
 
-function drawLine(map, item) {
+function drawLine(map, item, showMarkers) {
     if (!item) return;
     const latlngs = [
         [parseCoord(item.lat1), parseCoord(item.lon1)],
@@ -73,6 +73,19 @@ function drawLine(map, item) {
         line.bindPopup(popupContent);
         // console.log(line);
         line.addTo(map);
+
+        if (showMarkers) {
+            const startMarker = L.marker(latlngs[0], { icon: greenDotIcon }).addTo(map).bindPopup(`${item.lat1} ${item.lon1}`);
+            const endMarker = L.marker(latlngs[1], { icon: greenDotIcon }).addTo(map).bindPopup(`${item.lat2} ${item.lon2}`);
+
+            startMarker.on('click', function() {
+                navigator.clipboard.writeText(`${item.lat1} ${item.lon1}`);
+            });
+
+            endMarker.on('click', function() {
+                navigator.clipboard.writeText(`${item.lat2} ${item.lon2}`);
+            });
+        }
     }
 }
 
@@ -147,8 +160,9 @@ function updateLineHistory() {
 function drawNextLine() {
     if (parsedLines && nowIndex < parsedLines.length) {
         const nowLine = parsedLines[nowIndex++];
+        const showMarkers = document.getElementById('show-line-markers').checked;
         // console.log('Drew line', nowLine);
-        drawLine(map, nowLine);
+        drawLine(map, nowLine, showMarkers);
         drawnLines.push(nowLine);
         updateLineHistory();
     } else {
@@ -428,7 +442,6 @@ if (typeof window !== 'undefined') {
 }
 
 function calculateDestinationPoint() {
-    debugger;
     const startDMS = document.getElementById('destination-start-dms').value;
     const heading = parseFloat(document.getElementById('destination-heading').value);
     const distance = parseFloat(document.getElementById('destination-distance').value);
@@ -481,6 +494,8 @@ function calculateProjection() {
     const pointsData = document.getElementById('projection-points').value;
     const resultDiv = document.getElementById('projection-result');
 
+    const resultDivArea = document.getElementById('projection-result-area');
+
     if (!startDMS || isNaN(heading) || !pointsData) {
         resultDiv.textContent = 'Invalid input. Please fill all fields.';
         return;
@@ -525,7 +540,7 @@ function calculateProjection() {
     const projectedPoints = pointLines.map(line => {
         const trimmedLine = line.trim();
         if (!trimmedLine) return null;
-        const parts = trimmedLine.split(':');
+        const parts = trimmedLine.split(/[:\s]+/);
         if (parts.length < 2) return null;
 
         const pointLat = parseCoord(parts[0]);
@@ -540,7 +555,7 @@ function calculateProjection() {
         const closestPoint = L.LineUtil.closestPointOnSegment(p, p1, p2);
         const closestLatLng = map.layerPointToLatLng(closestPoint);
 
-        return `${toDMS(closestLatLng.lat, true)}:${toDMS(closestLatLng.lng, false)}:${parts[2]}:${parts[3]}`;
+        return `${toDMS(closestLatLng.lat, true)}:${toDMS(closestLatLng.lng, false)}:${parts.slice(2).join(':')}`;
     }).filter(Boolean);
 
     resultDiv.innerHTML = projectedPoints.join('<br>');
