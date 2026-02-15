@@ -62,6 +62,17 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+    <style>
+        .overlay-image {
+            position: absolute;
+            top: 200px;
+            left: 500px;
+            width: 450px;
+            pointer-events: none;
+            opacity: 0.5;
+            z-index: 1000;
+        }
+    </style>
 </head>
 
 <body>
@@ -78,9 +89,11 @@
       <div class="row gy-4">
         <div class="col-lg-12">
           <h3>地圖</h3>
+            <img class="overlay-image" src="https://media.discordapp.net/attachments/868725828807172146/1471896003945824369/20260213_210942.jpg?ex=69909979&is=698f47f9&hm=36da11900c53ac142567680519e8e210ef806d3c69d07aa8f6bac88fdff4ccd8&=&format=webp&width=720&height=960">
 
           <div id="map-replay" style="height: 600px"></div>
           點點的位子：<div id="marker-coord-display" style="font-family: 'Roboto Mono', monospace; font-size: 1.2em; margin-top: 10px;"></div>
+            <button id="add-marker-pair-btn" class="btn btn-warning" style="margin-top: 5px;">Add Marker Pair</button>
 
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 10px;">
@@ -97,6 +110,7 @@
             <div class="tab-pane active" id="line-tool" role="tabpanel" aria-labelledby="line-tool-tab" style="padding: 15px; border: 1px solid #ddd; border-top: none;">
               <div style="margin-top: 10px;">
                   <textarea id="data-input" rows="10" style="width: 100%; font-family: 'Roboto Mono', monospace;" placeholder="Paste your data here..."></textarea>
+
                   <button id="parse-data-btn" class="btn btn-success" style="margin-top: 5px;">Parse Data</button>
               </div>
               <button id="draw-next-line-btn" class="btn btn-primary" style="margin-top: 10px; display: none;">Draw Next Line</button>

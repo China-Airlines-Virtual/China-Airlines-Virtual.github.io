@@ -76,6 +76,8 @@ function drawLine(map, item) {
     }
 }
 
+let marker = null;
+
 function initMapReplay(targetElementId, timelineName, center, zoom, members) {
     if (typeof L === 'undefined') {
         console.error('Leaflet library is not loaded');
@@ -112,7 +114,7 @@ function initMapReplay(targetElementId, timelineName, center, zoom, members) {
     });
 
     // Add a draggable marker at the map center, but move to first parsed point if available
-    let marker = L.marker([center.lat, center.lon], { draggable: true, icon: blueDotIcon }).addTo(map);
+    marker = L.marker([center.lat, center.lon], { draggable: true, icon: blueDotIcon }).addTo(map);
     updateMarkerCoordDisplay(center.lat, center.lon);
     marker.on('drag', function(e) {
         const { lat, lng } = e.target.getLatLng();
@@ -122,7 +124,6 @@ function initMapReplay(targetElementId, timelineName, center, zoom, members) {
         const { lat, lng } = e.target.getLatLng();
         updateMarkerCoordDisplay(lat, lng);
     });
-
 
 }
 
@@ -369,6 +370,38 @@ function drawAreaFromTextarea() {
 // Add event listener for the button after DOM is loaded
 if (typeof window !== 'undefined') {
     window.addEventListener('DOMContentLoaded', function() {
+        let lastPoint = null;
+        const addMarkerPairBtn = document.getElementById('add-marker-pair-btn');
+        if (addMarkerPairBtn) {
+            addMarkerPairBtn.addEventListener('click', function() {
+                if (!marker) return;
+                console.log('clicked');
+                const { lat, lng } = marker.getLatLng();
+
+                if (lastPoint === null) {
+                    lastPoint = { lat, lng };
+                    console.log('First point set:', lastPoint);
+                    // Maybe provide some user feedback here
+                } else {
+                    const lat1 = toDMS(lastPoint.lat, true);
+                    const lon1 = toDMS(lastPoint.lng, false);
+                    const lat2 = toDMS(lat, true);
+                    const lon2 = toDMS(lng, false);
+                    const line = `${lat1} ${lon1} ${lat2} ${lon2} COLOR_TWYLine`;
+                    const textarea = document.getElementById('data-input');
+                    if (textarea) {
+                        if (textarea.value && !textarea.value.endsWith('\n')) {
+                            textarea.value += '\n';
+                        }
+                        textarea.value += line + '\n';
+                    }
+                    lastPoint = { lat, lng }; // Set current location as the start for the next line
+                    console.log('Second point set, line added:', line);
+                    console.log('New start point set:', lastPoint);
+                }
+            });
+        }
+
         const drawBtn = document.getElementById('draw-next-line-btn');
         if (drawBtn) drawBtn.addEventListener('click', drawNextLine);
 
