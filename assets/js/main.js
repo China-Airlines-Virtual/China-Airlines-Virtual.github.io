@@ -244,6 +244,9 @@
         duration: 1,
       })
 
+      // Initiate map replay; the timeline is declared on the #map-replay element
+      initMapReplayFromElement(data)
+
       const memberListElem = document.getElementById('member-list')
       if (!memberListElem) return
 
@@ -349,10 +352,6 @@
       })
 
       memberListElem.append(...memberElems)
-
-
-      // Initiate map replay
-      initMapReplay('map-replay', 'assets/timeline/timeline-20260822.json', { lat: 24.0, lon: 116.7 }, 6, data);
     })
 
   fetch('assets/statistics.json')
@@ -370,6 +369,8 @@
         end: Math.floor(data.trackedTime / 60),
         duration: 1,
       })
+
+      if (!document.getElementById('statistics-all-legs')) return
 
       data.all.legs.forEach((row) => {
         const p = document.createElement('p')
@@ -412,6 +413,7 @@
   const map = initLiveMap('live-map', { lat: 25.07742848819059, lon: 121.23215698936468 }, 4)
   const markerMap = new Map()
   const updateFlipFlapBoard = await initFlipFlapBoard()
+  if (!map || !updateFlipFlapBoard) return
   async function updateLiveTraffic() {
     const pilotsPromises = getOnlinePilots()
     // update live map

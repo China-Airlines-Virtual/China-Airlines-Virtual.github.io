@@ -1,0 +1,27 @@
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+      <div class="me-auto">
+        <img src="assets/img/logo.png" alt="" height="60">
+      </div>
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto{% if activeNav == 'home' %} active{% endif %}" href="{{ navPrefix }}#hero">{{ t.nav.home }}</a></li>
+          <li><a class="nav-link scrollto" href="{{ navPrefix }}#hiring">{{ t.nav.hiring }}</a></li>
+          <li><a class="nav-link scrollto" href="{{ navPrefix }}#statistics">{{ t.nav.statistics }}</a></li>
+          <li><a class="nav-link scrollto" href="{{ navPrefix }}#members">{{ t.nav.members }}</a></li>
+          <li><a class="nav-link scrollto" href="{{ navPrefix }}#partners">{{ t.nav.partners }}</a></li>
+          {% if flightHistoryHref %}<li><a class="nav-link scrollto{% if activeNav == 'flightHistory' %} active{% endif %}" href="{{ flightHistoryHref }}">{{ t.nav.flightHistory }}</a></li>
+          {% endif %}<li><a class="nav-link scrollto" href="#privacy">{{ t.nav.privacy }}</a></li>
+          <li><a class="nav-link scrollto" href="{{ languageHref }}">{{ t.nav.languageSwitch }}</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+      <a href="{{ site.crewLoginUrl }}" class="appointment-btn scrollto"><span
+          class="d-none d-md-inline">{{ t.nav.crewLogin }}</span></a>
+
+    </div>
+  </header><!-- End Header -->

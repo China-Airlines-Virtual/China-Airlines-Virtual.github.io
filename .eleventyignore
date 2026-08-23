@@ -1,0 +1,9 @@
+node_modules
+README.md
+parse.js
+*.txt
+!robots.txt
+RCTP.json
+RCKH.json
+RCTP-format.json
+.idea

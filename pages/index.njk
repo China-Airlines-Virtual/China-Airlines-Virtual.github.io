@@ -1,0 +1,279 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: site.locales
+  size: 1
+  alias: pageLocale
+permalink: "{{ pageLocale.permalink }}"
+navPrefix: ""
+activeNav: home
+eleventyComputed:
+  pageHref: "{{ pageLocale.href }}"
+---
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+    <div class="hero-cover" style="height: 100%; background-image: url('assets/img/hero-bg.jpg'); background-size: cover; background-position: center;">
+      <div style="position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; transform: translate(-50%, -50%);">
+        <iframe
+                width="100%"
+                height="100%"
+                src="{{ site.heroVideoEmbedUrl | safe }}"
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+                allowfullscreen
+                style="pointer-events: none;"
+        ></iframe>
+      </div>
+      <div class="mask"></div>
+    </div>
+    <div class="container">
+      <h1>{{ t.hero.title }}</h1>
+      <h2>{{ t.hero.subtitle }}</h2>
+      <a href="{{ site.discordUrl }}" class="btn-get-started scrollto">{{ t.hero.cta }}</a>
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= Why Us Section ======= -->
+    <section id="why-us" class="why-us">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-4 d-flex align-items-stretch">
+            <div class="content">
+              <h3>{{ t.whyUs.heading }}</h3>
+              <p>
+                {{ t.whyUs.bodyHtml | safe }}
+              </p>
+              <h4>{{ t.whyUs.welcome }}</h4>
+              <div class="text-center">
+                <a href="{{ site.discordUrl }}" class="more-btn">{{ t.whyUs.cta }} <i class="bx bx-chevron-right"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8 d-flex align-items-stretch">
+            <div class="icon-boxes d-flex flex-column justify-content-center">
+              <div class="row">
+                {%- for box in t.whyUs.boxes %}
+                <div class="col-xl-4 d-flex align-items-stretch">
+                  <div class="icon-box mt-4 mt-xl-0">
+                    <i class="{{ box.icon }}"></i>
+                    <h4>{{ box.title }}</h4>
+                    <p>{{ box.text }}</p>
+                  </div>
+                </div>
+                {%- endfor %}
+              </div>
+            </div><!-- End .content-->
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Why Us Section -->
+
+    <!-- ======= Counts Section ======= -->
+    <section id="counts" class="counts">
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6">
+            <div class="count-box">
+              <i class="fas fa-user-md"></i>
+              <span id="purecounter-pilots">0</span>
+              <p>{{ t.counts.pilots }}</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mt-5 mt-md-0">
+            <div class="count-box">
+              <i class="far fa-hospital"></i>
+              <span id="purecounter-legs"></span>
+              <p>{{ t.counts.legs }}</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mt-5 mt-lg-0">
+            <div class="count-box">
+              <i class="fas fa-flask"></i>
+              <span id="purecounter-time"></span>
+              <p>{{ t.counts.hours }}</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Counts Section -->
+
+    <!-- ======= About Section ======= -->
+    <section id="hiring" class="about">
+      <div class="container-fluid">
+
+        <div class="row">
+          <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch position-relative">
+            <a href="{{ site.introVideoUrl }}" class="glightbox play-btn mb-4"></a>
+          </div>
+
+          <div
+            class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
+            <h3>{{ t.hiring.heading }}</h3>
+            <p>{{ t.hiring.intro }}</p>
+            {% for box in t.hiring.boxes %}
+            <div class="icon-box">
+              <a href="{% if box.link == 'discord' %}{{ site.discordUrl }}{% elif box.link == 'facebook' %}{{ site.facebookUrl }}{% else %}{{ site.instagramUrl }}{% endif %}" target="_blank">
+                <div class="icon"><i class="{{ box.icon }}"></i></div>
+                <h4 class="title">{{ box.title }}</h4>
+              </a>
+              <p class="description">{{ box.text }}</p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div
+            class="col-xl-6 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
+            <h3>{{ t.dispatch.heading }}</h3>
+            <p>{{ t.dispatch.intro }}</p>
+            {% for box in t.dispatch.boxes %}
+            <div class="icon-box" style="margin-top: 15px">
+              <div class="icon"><i class="{{ box.icon }}"></i></div>
+              <h4 class="title">{{ box.title }}</h4>
+              <p class="description">{{ box.text }}</p>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="col-xl-6 col-lg-6 d-flex justify-content-center align-items-stretch position-relative">
+            <img src="assets/img/dispatch-intro.jpg" class="glightbox mb-4" style="width: 100%; object-fit: contain;" />
+          </div>
+        </div>
+      </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Departments Section ======= -->
+    <section id="statistics" class="departments">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>{{ t.statistics.heading }}</h2>
+        </div>
+
+        <div class="row gy-4">
+          <div class="col-lg-2">
+            <ul class="nav nav-tabs flex-column">
+              {%- for tab in site.statisticsTabs %}
+              <li class="nav-item">
+                <a class="nav-link{% if loop.first %} active show{% endif %}" data-bs-toggle="tab" href="#{{ tab.id }}">{{ t.statistics.tabs[tab.key] }}</a>
+              </li>
+              {%- endfor %}
+            </ul>
+          </div>
+          <div class="col-lg-4">
+            <div class="tab-content">
+              {%- for tab in site.statisticsTabs %}
+              <div class="tab-pane{% if loop.first %} active show{% endif %}" id="{{ tab.id }}">
+                <div class="row gy-4">
+                  <div id="{{ tab.target }}" class="col-lg-8 details order-2 order-lg-1">
+                    <h3>{{ t.statistics.tabs[tab.key] }}</h3>
+                  </div>
+                </div>
+              </div>
+              {%- endfor %}
+            </div>
+          </div>
+          <div class="col-lg-6">
+            {%- set latest = flightData.latest %}
+            {%- if latest %}
+            <h3>{{ latest.date | slashDate }} {{ t.flightHistory.recordSuffix }} <a href="flight-history-{{ latest.id }}.html" style="font-size: 0.5em">{{ t.flightHistory.openLarger }}</a></h3>
+            <div id="map-replay" style="min-height: 200px" data-timeline="{{ latest.timeline }}" data-lat="{{ latest.map.lat }}" data-lon="{{ latest.map.lon }}" data-zoom="{{ latest.map.zoom }}"></div>
+            {%- endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 80px">
+        <div class="col-xl-7 col-lg-6 col-md-5 mt-12 mt-md-0">
+          <div id="live-map" style="min-height: 250px"></div>
+        </div>
+        <div class="col-xl-5 col-lg-6 col-md-7 mt-12 mt-md-0">
+          <div class="flip-flap-board">
+            <div id="flip-flap-header">{{ site.flipFlap.header }}</div>
+            <div id="flip-flap"></div>
+            <div class="flip-flap-board-footer">{{ site.flipFlap.footer | safe }}</div>
+          </div>
+        </div>
+      </div>
+    </section><!-- End Departments Section -->
+
+    <!-- ======= Members Section ======= -->
+    <section id="members" class="members">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>{{ t.members.heading }}</h2>
+        </div>
+
+        <div id="member-list" class="row"></div>
+
+      </div>
+    </section><!-- End Members Section -->
+
+    <!-- ======= Frequently Asked Questions Section ======= -->
+    <section id="faq" class="faq section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>{{ t.faq.heading }}</h2>
+        </div>
+
+        <div class="faq-list">
+          <ul>
+            {%- for item in t.faq.items %}
+            <li data-aos="fade-up"{% if not loop.first %} data-aos-delay="{{ loop.index0 * 100 }}"{% endif %}>
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
+                class="{% if loop.first %}collapse{% else %}collapsed{% endif %}"
+                data-bs-target="#faq-list-{{ loop.index }}">{{ item.question }} <i class="bx bx-chevron-down icon-show"></i><i
+                  class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-{{ loop.index }}" class="collapse{% if loop.first %} show{% endif %}" data-bs-parent=".faq-list">
+                <p>
+                  {{ item.answerHtml | safe }}
+                </p>
+              </div>
+            </li>
+            {%- endfor %}
+          </ul>
+        </div>
+
+      </div>
+    </section><!-- End Frequently Asked Questions Section -->
+
+    <!-- ======= Partners Section ======= -->
+    <section id="partners" class="services">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>{{ t.partners.heading }}</h2>
+        </div>
+
+        <div class="row">
+          {%- for partner in site.partners %}
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch{% if partner.mt %} {{ partner.mt }}{% endif %}">
+            <a class="icon-box" href="{{ partner.href }}" target="_blank">
+              <div>
+                <img src="{{ partner.img }}" width="160" />
+              </div>
+              <p>{{ t.partners.items[partner.key] }}</p>
+            </a>
+          </div>
+          {%- endfor %}
+        </div>
+
+      </div>
+    </section><!-- End Partners Section -->
+
+{% include "partials/privacy.njk" %}
+
+  </main><!-- End #main -->

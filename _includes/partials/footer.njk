@@ -1,0 +1,52 @@
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>{{ t.footer.orgName }}</h3>
+            <p>
+              <strong>{{ t.footer.email }}</strong> <img src="assets/img/email.png">
+            </p>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>{{ t.footer.relatedLinks }}</h4>
+            <ul>
+              {%- for link in site.footerLinks %}
+              <li><i class="bx bx-chevron-right"></i> <a href="{{ link.href }}">{{ link.label }}</a></li>
+              {%- endfor %}
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container d-md-flex py-4">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong><span>{{ t.footer.copyright }}</span></strong>. All Rights Reserved
+        </div>
+        <div class="copyright">
+          {{ t.footer.disclaimerTitle }}<br />
+          {{ t.footer.disclaimer }}
+        </div>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+      <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="{{ site.discordUrl }}" target="_blank" class="discord"><i class="bx bxl-discord"></i></a>
+        <a href="{{ site.facebookUrl }}" target="_blank" class="facebook"><i
+            class="bx bxl-facebook"></i></a>
+        <a href="{{ site.instagramUrl }}" target="_blank" class="instagram"><i
+            class="bx bxl-instagram"></i></a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->

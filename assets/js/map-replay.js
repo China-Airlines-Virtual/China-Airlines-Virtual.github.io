@@ -13,6 +13,22 @@ function createMarker(heading, callsign, color = 'black') {
     return div
 }
 
+// Reads the replay configuration from the #map-replay element's data-* attributes,
+// so each page only has to declare the timeline in its markup.
+function initMapReplayFromElement(members, targetElementId = 'map-replay') {
+    const element = document.getElementById(targetElementId);
+    if (!element || !element.dataset.timeline) {
+        return;
+    }
+    initMapReplay(
+        targetElementId,
+        element.dataset.timeline,
+        { lat: Number(element.dataset.lat), lon: Number(element.dataset.lon) },
+        Number(element.dataset.zoom),
+        members
+    );
+}
+
 function initMapReplay(targetElementId, timelineName, center, zoom, members) {
     if (typeof L === 'undefined') {
         console.error('Leaflet library is not loaded');
@@ -149,7 +165,11 @@ async function loadAirportCityMap() {
 }
 
 async function initFlipFlapBoard() {
-    document.getElementById('flip-flap-header').innerText = (isIcaoVersion)
+    const headerElement = document.getElementById('flip-flap-header')
+    if (!headerElement) {
+        return null
+    }
+    headerElement.innerText = (isIcaoVersion)
         ? '　　班次　　出發　　目的地 離場　　抵達'
         : '　　班次　　 機型　　　　　出發　　　　　　　　目的地　　　　　離場 　抵達　　　備註　　登機'
     const updateFlipFlapBoard = createFlipFlapBoard(

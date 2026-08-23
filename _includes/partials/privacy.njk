@@ -1,0 +1,29 @@
+    <!-- ======= Privacy Section ======= -->
+    <section id="privacy" class="privacy"{% if privacyPaddingTop %} style="padding-top: {{ privacyPaddingTop }}"{% endif %}>
+      <div class="container">
+
+        <div class="section-title">
+          <h2>{{ t.privacy.heading }}</h2>
+        </div>
+        <div>
+          <h5>{{ t.privacy.subheading }}</h5>
+          <p>
+            {{ t.privacy.intro }}
+          </p>
+          <ul>
+            {%- for item in t.privacy.items %}
+            <li>{{ item }}</li>
+            {%- endfor %}
+          </ul>
+          {%- for paragraph in t.privacy.paragraphs %}
+          <p>
+            {{ paragraph }}
+          </p>
+          {%- endfor %}
+          <p>
+            {{ t.privacy.contactBefore }}<img src="assets/img/email.png">{{ t.privacy.contactAfter }}
+          </p>
+        </div>
+
+      </div>
+    </section><!-- End Privacy Section -->
