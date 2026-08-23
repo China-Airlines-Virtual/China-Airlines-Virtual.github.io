@@ -19,6 +19,7 @@ eleventyComputed:
                 height="100%"
                 src="{{ site.heroVideoEmbedUrl | safe }}"
                 frameborder="0"
+                loading="lazy"
                 allow="autoplay; encrypted-media"
                 allowfullscreen
                 style="pointer-events: none;"
@@ -147,7 +148,7 @@ eleventyComputed:
             {% endfor %}
           </div>
           <div class="col-xl-6 col-lg-6 d-flex justify-content-center align-items-stretch position-relative">
-            <img src="assets/img/dispatch-intro.jpg" class="glightbox mb-4" style="width: 100%; object-fit: contain;" />
+            <img src="assets/img/dispatch-intro.jpg" class="glightbox mb-4" loading="lazy" decoding="async" style="width: 100%; object-fit: contain;" />
           </div>
         </div>
       </div>
@@ -263,7 +264,7 @@ eleventyComputed:
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch{% if partner.mt %} {{ partner.mt }}{% endif %}">
             <a class="icon-box" href="{{ partner.href }}" target="_blank">
               <div>
-                <img src="{{ partner.img }}" width="160" />
+                <img src="{{ partner.img }}" width="160" loading="lazy" decoding="async" />
               </div>
               <p>{{ t.partners.items[partner.key] }}</p>
             </a>

@@ -168,9 +168,24 @@
    */
   let preloader = select('#preloader');
   if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove()
-    });
+    // Dismiss as soon as the DOM is usable instead of waiting for `load`, which
+    // also waits for the hero iframe, third-party scripts and every image.
+    const hidePreloader = () => {
+      if (!preloader) return
+      const elem = preloader
+      preloader = null
+      elem.classList.add('is-hidden')
+      elem.addEventListener('transitionend', () => elem.remove(), { once: true })
+      setTimeout(() => elem.remove(), 600)
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', hidePreloader, { once: true })
+    } else {
+      requestAnimationFrame(hidePreloader)
+    }
+    window.addEventListener('load', hidePreloader, { once: true })
+    setTimeout(hidePreloader, 1500)
   }
 
   /**
@@ -284,6 +299,8 @@
           const memberImage = document.createElement('img')
           memberImage.classList.add('img-fluid')
           memberImage.width = "100"
+          memberImage.loading = 'lazy'
+          memberImage.decoding = 'async'
           memberImage.src = `assets/img/members/${member.avatarFileName}`
           memberImage.alt = ''
           memberImageContainer.appendChild(memberImage)

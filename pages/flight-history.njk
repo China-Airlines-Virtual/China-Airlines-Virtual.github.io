@@ -24,7 +24,7 @@ eleventyComputed:
       <div class="row gy-4">
         <div class="col-lg-12">
           {%- if flight.image %}
-          <img src="{{ flight.image }}" width="100%">
+          <img src="{{ flight.image }}" width="100%" loading="lazy" decoding="async">
           {%- endif %}
           {%- for line in flight.lines[localeCode] %}
           {{ line }}<br>

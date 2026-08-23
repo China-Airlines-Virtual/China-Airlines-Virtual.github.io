@@ -45,6 +45,13 @@ h6 {
   z-index: 9999;
   overflow: hidden;
   background: #fff;
+  opacity: 1;
+  transition: opacity 0.35s ease-out;
+}
+
+#preloader.is-hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 #preloader:before {
