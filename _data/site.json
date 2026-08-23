@@ -1,0 +1,38 @@
+{
+  "url": "https://china-airlines-virtual.github.io",
+  "crewLoginUrl": "https://crew.china-airlines-virtual.com/dashboard",
+  "discordUrl": "https://discord.gg/USDFnDamPG",
+  "facebookUrl": "https://www.facebook.com/groups/596448671760640",
+  "instagramUrl": "https://www.instagram.com/china.airlines_virtual",
+  "introVideoUrl": "https://youtu.be/wL98U1r6JDk?si=2vU1z39H22a3R4P4",
+  "heroVideoEmbedUrl": "https://www.youtube.com/embed/mOUhXYManWc?autoplay=1&mute=1&loop=1&playlist=mOUhXYManWc&controls=0&showinfo=0&autohide=1&modestbranding=1",
+  "ogImage": "/assets/img/ogimage.jpg",
+  "flipFlap": {
+    "header": "　　班次　　　　　　出發　　　　　　　　飛往　　　　　離場　　抵達",
+    "footer": "本欄資訊僅提供 \"VATSIM\" 與 \"IVAO\" 台灣航班"
+  },
+  "locales": [
+    { "code": "zh-TW", "lang": "zh-Hant-TW", "permalink": "index.html", "href": "/" },
+    { "code": "en", "lang": "en", "permalink": "index-en.html", "href": "/index-en.html" }
+  ],
+  "footerLinks": [
+    { "label": "Home", "href": "#" },
+    { "label": "VATSIM", "href": "https://vatsim.net/" },
+    { "label": "IVAO", "href": "https://ivao.aero/" }
+  ],
+  "partners": [
+    { "key": "vatsim", "href": "https://vatsim.net/", "img": "assets/img/logo-vatsim.png", "mt": "" },
+    { "key": "ivao", "href": "https://www.ivao.aero/", "img": "assets/img/logo-ivao.png", "mt": "mt-4 mt-md-0" },
+    { "key": "hangzhou", "href": "https://www.hangzhouva.com/", "img": "assets/img/logo-hangzhou-airlines.png", "mt": "mt-4 mt-lg-0" },
+    { "key": "jal", "href": "https://jalvirtual.com/", "img": "assets/img/logo-jal.png", "mt": "mt-4 mt-lg-0" },
+    { "key": "simbrief", "href": "https://www.simbrief.com/home/?page=vapartners", "img": "assets/img/logo-simbrief.jpg", "mt": "mt-4 mt-lg-0" }
+  ],
+  "statisticsTabs": [
+    { "id": "tab-1", "target": "statistics-all-legs", "key": "allLegs" },
+    { "id": "tab-2", "target": "statistics-all-duration", "key": "allDuration" },
+    { "id": "tab-3", "target": "statistics-year-legs", "key": "yearLegs" },
+    { "id": "tab-4", "target": "statistics-year-duration", "key": "yearDuration" },
+    { "id": "tab-5", "target": "statistics-month-legs", "key": "monthLegs" },
+    { "id": "tab-6", "target": "statistics-month-duration", "key": "monthDuration" }
+  ]
+}

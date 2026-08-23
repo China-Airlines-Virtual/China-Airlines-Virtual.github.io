@@ -1,0 +1,273 @@
+{
+  "zh-TW": {
+    "meta": {
+      "title": "中華虛擬航空 China Airlines Virtual",
+      "siteName": "中華虛擬航空 China Airlines Virtual",
+      "description": "中華虛擬航空於2021年9月3日在台灣成立，是一家非營利的虛擬航空公司，我們會一起在虛擬天空中，與同好們一同享受無壓力的飛行。",
+      "keywords": "IVAO, VATSIM, MSFS, XP12, Virtual airlines, 虛擬航空"
+    },
+    "nav": {
+      "home": "首頁",
+      "hiring": "人才招募",
+      "statistics": "統計數據",
+      "members": "成員名單",
+      "partners": "合作夥伴",
+      "flightHistory": "聯飛紀錄",
+      "privacy": "隱私權政策",
+      "languageSwitch": "English",
+      "crewLogin": "組員登入"
+    },
+    "hero": {
+      "title": "中華虛擬航空",
+      "subtitle": "點亮台灣的天空",
+      "cta": "加入我們"
+    },
+    "whyUs": {
+      "heading": "飛行，不該有門檻。",
+      "bodyHtml": "中華虛擬航空是一個讓熱愛飛行的人聚在一起的地方。\n                從第一次起飛的緊張，到熟練巡航的從容，\n                我們陪你走過每一段航程。<br>\n                這裡沒有壓力，只有分享與成長；<br>\n                沒有距離，只有共同仰望的天空。",
+      "welcome": "歡迎回家，機長。",
+      "cta": "加入我們",
+      "boxes": [
+        { "icon": "bx bx-receipt", "title": "連飛活動", "text": "與其他虛擬航空公司舉辦飛行活動" },
+        { "icon": "bx bx-cube-alt", "title": "線上教學", "text": "至今已經舉辦數十場線上課程，讓菜鳥成為能夠自在與航管溝通的機師" },
+        { "icon": "bx bx-images", "title": "台灣最活躍社群", "text": "每天都有許多成員在 Discord 上愉快的交流" }
+      ]
+    },
+    "counts": {
+      "pilots": "活躍機師",
+      "legs": "班次",
+      "hours": "飛行時數"
+    },
+    "hiring": {
+      "heading": "人才招募",
+      "intro": "無論是菜鳥、資深機師、專業航管，我們都非常歡迎您的加入",
+      "boxes": [
+        { "link": "discord", "icon": "bx bxl-discord", "title": "加入 Discord", "text": "每天都有成員們在線上飛行、學習、討論" },
+        { "link": "facebook", "icon": "bx bxl-facebook", "title": "加入 Facebook 社團", "text": "社團內有設百位成員與你一起分享飛行時的快樂" },
+        { "link": "instagram", "icon": "bx bxl-instagram", "title": "追蹤 Instagram", "text": "不定時分享活動資訊及照片" }
+      ]
+    },
+    "dispatch": {
+      "heading": "簽派系統",
+      "intro": "我們擁有強大的簽派系統，讓您紀錄每次的飛行",
+      "boxes": [
+        { "icon": "bx bxs-plane-take-off", "title": "真實航空的航線與飛機", "text": "模擬真實航空公司的航線與執飛體驗" },
+        { "icon": "bx bx-cross", "title": "追蹤每趟飛行", "text": "紀錄你的每班飛行，回憶去過的每個機場" },
+        { "icon": "bx bx-objects-vertical-bottom", "title": "統計飛行資料", "text": "與朋友一起比賽看誰飛的又多又遠又省油" },
+        { "icon": "bx bx-party", "title": "有趣的活動與任務", "text": "不定期舉辦主題飛行、挑戰任務與限時活動，讓每一次飛行都多一點驚喜與成就感。" }
+      ]
+    },
+    "statistics": {
+      "heading": "統計數據",
+      "tabs": {
+        "allLegs": "總航班數前 5 名",
+        "allDuration": "總飛行時數前 5 名",
+        "yearLegs": "本年航班數前 5 名",
+        "yearDuration": "本年飛行時數前 5 名",
+        "monthLegs": "本月航班數前 5 名",
+        "monthDuration": "本月飛行時數前 5 名"
+      }
+    },
+    "flightHistory": {
+      "recordHeading": "聯飛紀錄",
+      "detailHeading": "聯飛細節",
+      "otherHeading": "其他聯飛紀錄",
+      "recordSuffix": "聯飛紀錄",
+      "openLarger": "開啟大圖"
+    },
+    "members": {
+      "heading": "成員名單"
+    },
+    "faq": {
+      "heading": "常見問題",
+      "items": [
+        {
+          "question": "什麼是虛擬航空？",
+          "answerHtml": "虛擬航空是一個模擬真實航空公司的團體，透過連飛平台，成員們可以在虛擬天空中飛行，並且可以與其他飛行員與航管進行溝通。"
+        },
+        {
+          "question": "會不會被開除？",
+          "answerHtml": "原則上不會，除非違反本虛擬航空規定。"
+        },
+        {
+          "question": "加入後具體來說要做什麼？",
+          "answerHtml": "在虛擬天空中翱翔，並遵守當地飛行規定"
+        },
+        {
+          "question": "有薪水嗎？",
+          "answerHtml": "當然不會有薪水拉😂，但會不定時發送禮物，年末會舉辦抽獎活動慰勞各位"
+        },
+        {
+          "question": "我飛不好會不會被罵？",
+          "answerHtml": "不會<del>，但可能會被笑</del>，我們是一個友善的社群，歡迎任何人加入，不論您是新手或老手，我們都會以最大的熱情歡迎您的加入。"
+        }
+      ]
+    },
+    "partners": {
+      "heading": "合作夥伴",
+      "items": {
+        "vatsim": "自 2023 年起，正式成為 VATSIM 合作夥伴",
+        "ivao": "自 2022 年起，正式成為 IVAO 合作夥伴",
+        "hangzhou": "自 2023 年起，正式成為杭州航空合作夥伴",
+        "jal": "自 2024 年起，正式成為日本航空合作夥伴",
+        "simbrief": "自 2024 年起，正式成為 Simbrief 合作夥伴"
+      }
+    },
+    "privacy": {
+      "heading": "隱私權政策",
+      "subheading": "資料蒐集",
+      "intro": "我們將基於虛擬航空公司對飛行員的角度蒐集以下資料:",
+      "items": [
+        "您的暱稱, 您的英文名縮寫, IVAO VID, VATSIM CID",
+        "您飛行的相關紀錄，僅限於當時飛行的呼號及飛行數據"
+      ],
+      "paragraphs": [
+        "我們將保留這些資料並顯示於我們網站上並作為活動宣傳使用。"
+      ],
+      "contactBefore": "若您對隱私權政策有任何疑問或要求刪除資料，請隨時透過信箱",
+      "contactAfter": "與我們聯繫。"
+    },
+    "footer": {
+      "orgName": "中華虛擬航空",
+      "email": "Email:",
+      "relatedLinks": "相關連結",
+      "copyright": "中華虛擬航空",
+      "disclaimerTitle": "※免責聲明※",
+      "disclaimer": "本網頁提供的所有資料、商標、標誌、圖像連結及其他資料等只供學術探討研究，並無任何營利商業用途，與真實航空公司無任何關係。"
+    }
+  },
+  "en": {
+    "meta": {
+      "title": "China Airlines Virtual",
+      "siteName": "China Airlines Virtual",
+      "description": "China Airlines Virtual was established in Taiwan on September 3, 2021. It is a non-profit virtual airlines, where we can enjoy stress-free flights in the virtual skies together with fellow enthusiasts.",
+      "keywords": "IVAO, VATSIM, MSFS, XP12, Virtual airlines"
+    },
+    "nav": {
+      "home": "Home",
+      "hiring": "Recruitment",
+      "statistics": "Statistics",
+      "members": "Members",
+      "partners": "Partners",
+      "flightHistory": "Flying Events",
+      "privacy": "Privacy Policy",
+      "languageSwitch": "中文",
+      "crewLogin": "Crew System"
+    },
+    "hero": {
+      "title": "China Airlines Virtual",
+      "subtitle": "Light up the skies of Taiwan",
+      "cta": "Join us"
+    },
+    "whyUs": {
+      "heading": "Flying without limits.",
+      "bodyHtml": "China Virtual Airlines is where passion takes flight.\n                From the thrill of your first takeoff to the confidence of a smooth cruise,\n                we’re with you every mile of the way.\n                No pressure—just sharing, growing, and a shared sky.",
+      "welcome": "Welcome aboard, Captain.",
+      "cta": "Join Us",
+      "boxes": [
+        { "icon": "bx bx-receipt", "title": "Flying event", "text": "Organizing flight events with other virtual airlines." },
+        { "icon": "bx bx-cube-alt", "title": "Online training", "text": "We have conducted dozens of online courses, helping rookies become pilots capable of confidently communicating with ATC." },
+        { "icon": "bx bx-images", "title": "The most active community in Taiwan.", "text": "Many members engage in joyful interactions on Discord every day." }
+      ]
+    },
+    "counts": {
+      "pilots": "Active Pilots",
+      "legs": "Number of flights",
+      "hours": "Flight hours"
+    },
+    "hiring": {
+      "heading": "Recruitment",
+      "intro": "Whether you're a beginner, an experienced pilot, or a professional air traffic controller, we warmly welcome you to join us.",
+      "boxes": [
+        { "link": "discord", "icon": "bx bxl-discord", "title": "Join Discord", "text": "Members flying online, learning, and discussing every day." },
+        { "link": "facebook", "icon": "bx bxl-facebook", "title": "Join Facebook Group", "text": "Over a hundred members sharing the joy of flying with you." },
+        { "link": "instagram", "icon": "bx bxl-instagram", "title": "Follow Instagram", "text": "Sharing event information and photos." }
+      ]
+    },
+    "dispatch": {
+      "heading": "Dispatch system",
+      "intro": "We have a powerful dispatch system that allows you to record every flight",
+      "boxes": [
+        { "icon": "bx bxs-plane-take-off", "title": "Real airline routes and aircraft", "text": "Simulate the routes and flight experience of real airlines" },
+        { "icon": "bx bx-cross", "title": "Track every flight", "text": "Record every flight you take and recall every airport you have been to" },
+        { "icon": "bx bx-objects-vertical-bottom", "title": "Flight statistics", "text": "Compete with friends to see who can fly more, farther and more fuel-efficiently" },
+        { "icon": "bx bx-party", "title": "Fun Events & Missions", "text": "Enjoy themed flights and limited-time challenges designed to make every takeoff more rewarding and full of surprises." }
+      ]
+    },
+    "statistics": {
+      "heading": "Statistics",
+      "tabs": {
+        "allLegs": "Top 5 of total number of flights",
+        "allDuration": "Top 5 of flight hours",
+        "yearLegs": "Top 5 of total number of flights in this year",
+        "yearDuration": "Top 5 of flight hours in this year",
+        "monthLegs": "Top 5 of total number of flights in this month",
+        "monthDuration": "Top 5 of flight hours in this month"
+      }
+    },
+    "flightHistory": {
+      "recordHeading": "Flying Events",
+      "detailHeading": "Event Details",
+      "otherHeading": "Other Flying Events",
+      "recordSuffix": "flying event",
+      "openLarger": "Open larger map"
+    },
+    "members": {
+      "heading": "Members"
+    },
+    "faq": {
+      "heading": "FAQ",
+      "items": [
+        {
+          "question": "What is virtual airlines?",
+          "answerHtml": "Virtual airlines is a virtual network that simulates real-world airlines, where pilots can fly in the virtual skies and communicate with other pilots and air traffic control."
+        },
+        {
+          "question": "Will I be fired?",
+          "answerHtml": "No, unless you violate the rules of this virtual airline."
+        },
+        {
+          "question": "What exactly do I need to do after joining?",
+          "answerHtml": "Soar in the virtual skies and follow the local flight regulations."
+        },
+        {
+          "question": "Is there a salary?",
+          "answerHtml": "Of course, there’s no salary."
+        }
+      ]
+    },
+    "partners": {
+      "heading": "Partners",
+      "items": {
+        "vatsim": "Since 2023, we have officially become a partner of VATSIM.",
+        "ivao": "Since 2022, we have officially become a partner of IVAO.",
+        "hangzhou": "Since 2023, we have officially become a partner of Hangzhou Airlines.",
+        "jal": "Since 2024, we have officially become a partner of Japan Airlines Virtual",
+        "simbrief": "Since 2024, we have officially become a partner of SimBrief"
+      }
+    },
+    "privacy": {
+      "heading": "Privacy Policy",
+      "subheading": "Information We Collect",
+      "intro": "We collect personal data strictly related to your role as a pilot within our organization:",
+      "items": [
+        "Your nickname, IVAO VID, VATSIM CID",
+        "Flight logs and records, limited to callsigns and specific flight telemetry/data generated during your flights."
+      ],
+      "paragraphs": [
+        "The collected data will be retained and displayed on our official website. This information is used for operational tracking and promotional purposes (such as event highlights and community showcases).",
+        "Your GDPR Rights: You can request to access, correct, or delete your data, and withdraw your consent at any time."
+      ],
+      "contactBefore": "If you have any questions regarding our Privacy Policy or wish to delete you data, please contact us via email at: ",
+      "contactAfter": ""
+    },
+    "footer": {
+      "orgName": "China Airlines Virtual",
+      "email": "Email:",
+      "relatedLinks": "Related links.",
+      "copyright": "China Airlines Virtual",
+      "disclaimerTitle": "※Disclaimer※",
+      "disclaimer": "The information, trademarks, logos, image links, and other materials provided on this website are for academic discussion and research purposes only. They are not intended for any commercial profit and are not affiliated with any real-world airline."
+    }
+  }
+}

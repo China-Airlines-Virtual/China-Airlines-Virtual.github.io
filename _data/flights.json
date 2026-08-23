@@ -1,0 +1,154 @@
+[
+  {
+    "id": "20240413",
+    "date": "2024-04-13",
+    "listed": true,
+    "title": {
+      "zh-TW": "2024/04/13 聯飛",
+      "en": "2024/04/13 Flying Event"
+    },
+    "image": null,
+    "lines": {
+      "zh-TW": [],
+      "en": []
+    },
+    "timeline": "assets/timeline/timeline-20240413.json",
+    "map": { "lat": 23.5, "lon": 116.7, "zoom": 6 }
+  },
+  {
+    "id": "20240705",
+    "date": "2024-07-05",
+    "listed": true,
+    "title": {
+      "zh-TW": "2024/07/05 聯飛",
+      "en": "2024/07/05 Flying Event"
+    },
+    "image": null,
+    "lines": {
+      "zh-TW": [],
+      "en": []
+    },
+    "timeline": "assets/timeline/timeline-20240705.json",
+    "map": { "lat": 24.0, "lon": 116.7, "zoom": 6 }
+  },
+  {
+    "id": "20240810",
+    "date": "2024-08-10",
+    "listed": true,
+    "title": {
+      "zh-TW": "2024/08/10 聯飛",
+      "en": "2024/08/10 Flying Event"
+    },
+    "image": null,
+    "lines": {
+      "zh-TW": [],
+      "en": []
+    },
+    "timeline": "assets/timeline/timeline-20240810.json",
+    "map": { "lat": 24.0, "lon": 116.7, "zoom": 6 }
+  },
+  {
+    "id": "20241109",
+    "date": "2024-11-09",
+    "listed": true,
+    "title": {
+      "zh-TW": "2024/11/09 聯飛",
+      "en": "2024/11/09 Flying Event"
+    },
+    "image": null,
+    "lines": {
+      "zh-TW": [],
+      "en": []
+    },
+    "timeline": "assets/timeline/timeline-20241109.json",
+    "map": { "lat": 24.0, "lon": 116.7, "zoom": 6 }
+  },
+  {
+    "id": "20250101",
+    "date": "2025-01-01",
+    "listed": true,
+    "title": {
+      "zh-TW": "2025/01/01 聯飛",
+      "en": "2025/01/01 Flying Event"
+    },
+    "image": null,
+    "lines": {
+      "zh-TW": [],
+      "en": []
+    },
+    "timeline": "assets/timeline/timeline-20250101.json",
+    "map": { "lat": 24.0, "lon": 116.7, "zoom": 6 }
+  },
+  {
+    "id": "20250202",
+    "date": "2025-02-02",
+    "listed": true,
+    "title": {
+      "zh-TW": "2025/02/02 聯飛",
+      "en": "2025/02/02 Flying Event"
+    },
+    "image": null,
+    "lines": {
+      "zh-TW": [],
+      "en": []
+    },
+    "timeline": "assets/timeline/timeline-20250202.json",
+    "map": { "lat": 24.0, "lon": 116.7, "zoom": 6 }
+  },
+  {
+    "id": "20250628",
+    "date": "2025-06-28",
+    "listed": true,
+    "title": {
+      "zh-TW": "台北東京夏季高峰",
+      "en": "Taipei–Tokyo Summer Peak"
+    },
+    "image": "assets/img/flight-history/20250628.png",
+    "lines": {
+      "zh-TW": [],
+      "en": []
+    },
+    "timeline": "assets/timeline/timeline-20250628.json",
+    "map": { "lat": 24.0, "lon": 116.7, "zoom": 6 }
+  },
+  {
+    "id": "20260221",
+    "date": "2026-02-21",
+    "listed": true,
+    "title": {
+      "zh-TW": "2/21開工日",
+      "en": "2/21 Back-to-Work Day"
+    },
+    "image": null,
+    "lines": {
+      "zh-TW": ["2/21開工日，中華虛擬航空與杭州航空一起開工大吉拉~"],
+      "en": ["China Airlines Virtual and Hangzhou Airlines kick off the new year together."]
+    },
+    "timeline": "assets/timeline/timeline-20260221.json",
+    "map": { "lat": 24.0, "lon": 116.7, "zoom": 6 }
+  },
+  {
+    "id": "20260822",
+    "date": "2026-08-22",
+    "listed": true,
+    "title": {
+      "zh-TW": "星華翱翔 | 中華虛擬航空 x 虛擬星宇航空",
+      "en": "Starlux Soaring | China Airlines Virtual x Starlux Virtual"
+    },
+    "image": "assets/img/flight-history/20260822.png",
+    "lines": {
+      "zh-TW": [
+        "星華翱翔 | 中華虛擬航空 x 虛擬星宇航空",
+        "中華虛擬航空與虛擬星宇航空聯合舉辦。",
+        "一路向北，跨越海洋，直指 BUSAN RKPK。"
+      ],
+      "en": [
+        "Starlux Soaring | China Airlines Virtual x Starlux Virtual",
+        "Jointly hosted by China Airlines Virtual and Starlux Virtual.",
+        "Heading north across the sea, straight to BUSAN RKPK."
+      ]
+    },
+    "timeline": "assets/timeline/timeline-20260822.json",
+    "map": { "lat": 24.0, "lon": 116.7, "zoom": 6 }
+  }
+]
