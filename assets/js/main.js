@@ -431,7 +431,17 @@
   const markerMap = new Map()
   const updateFlipFlapBoard = await initFlipFlapBoard()
   if (!map || !updateFlipFlapBoard) return
+
+  // Polling VATSIM/IVAO and rolling ~600 flaps is expensive, so only do it when
+  // the board is actually on screen and the tab is in the foreground.
+  const board = document.querySelector('.flip-flap-board')
+  let isOnScreen = true
+  let arrivalTimer = null
+
+  const isActive = () => isOnScreen && document.visibilityState === 'visible'
+
   async function updateLiveTraffic() {
+    if (!isActive()) return
     const pilotsPromises = getOnlinePilots()
     // update live map
     pilotsPromises.forEach((pilotsPromise) =>
@@ -456,11 +466,34 @@
       .sort((a, b) => Number(a.departureTime) - Number(b.departureTime))
     const departurePilots = pilots.filter((pilot) => pilot.departure.startsWith('RC'))
     const arrivalPilots = pilots.filter((pilot) => pilot.arrival.startsWith('RC'))
+    if (!isActive()) return
     updateFlipFlapBoard(departurePilots)
-    setTimeout(() => {
+    clearTimeout(arrivalTimer)
+    arrivalTimer = setTimeout(() => {
+      if (!isActive()) return
       updateFlipFlapBoard(arrivalPilots)
     }, 15000)
   }
+
+  function onActivityChange() {
+    if (isActive()) {
+      updateLiveTraffic()
+    } else {
+      clearTimeout(arrivalTimer)
+    }
+  }
+
+  if (board && 'IntersectionObserver' in window) {
+    isOnScreen = false
+    new IntersectionObserver((entries) => {
+      const nowOnScreen = entries.some((entry) => entry.isIntersecting)
+      if (nowOnScreen === isOnScreen) return
+      isOnScreen = nowOnScreen
+      onActivityChange()
+    }).observe(board)
+  }
+  document.addEventListener('visibilitychange', onActivityChange)
+
   updateLiveTraffic()
   setInterval(updateLiveTraffic, 30000)
 })()

@@ -6,8 +6,18 @@ function makeCycle(str) {
   }, {});
 }
 
-const charCycle = makeCycle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ')
-const numericCycle = makeCycle('0123456789 ')
+const CHAR_SET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 '
+const NUMERIC_SET = '0123456789 '
+
+const charCycle = makeCycle(CHAR_SET)
+const numericCycle = makeCycle(NUMERIC_SET)
+
+// Longest roll we allow for a single flap. Anything further away is snapped to
+// `MAX_FLIPS` steps before the target so one board update cannot schedule tens
+// of thousands of animation callbacks.
+const MAX_FLIPS = 12
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
 function createFlipFlapBoard(
   rowAmount,
@@ -66,7 +76,6 @@ function createFlipFlapBoard(
   }
 
   function flip(stringRows, isFast = false) {
-    let q = d3.queue();
     rows.each(function () {
       d3.select(this)
         .selectAll('.flap')
@@ -75,8 +84,7 @@ function createFlipFlapBoard(
             flap = d3.select(this);
           const isNumericOnly = i >= 40 && i < 48;
           if (fromLetter !== toLetter) {
-            q.defer(
-              flipLetter,
+            flipLetter(
               flap.datum(toLetter), fromLetter, toLetter, isNumericOnly, isFast
             );
           }
@@ -85,26 +93,46 @@ function createFlipFlapBoard(
     });
   }
 
-  function flipLetter(flap, fromLetter, toLetter, isNumericOnly, isFast, cb) {
+  function flipLetter(flap, fromLetter, toLetter, isNumericOnly, isFast) {
+    const set = (isNumericOnly) ? NUMERIC_SET : CHAR_SET;
     const cycle = (isNumericOnly) ? numericCycle : charCycle;
-    let current = fromLetter,
-      next = cycle[fromLetter],
-      prevFlaps = flap.selectAll('.prev span, .front span'),
+    const prevFlaps = flap.selectAll('.prev span, .front span'),
       nextFlaps = flap.selectAll('.back span, .next span');
 
+    function settle() {
+      flap.select('.front').on('animationiteration', null);
+      flap.classed('animated fast', false)
+        .selectAll('span')
+        .text(toLetter);
+    }
+
+    // A target that is not part of this flap's cycle can never be reached, so
+    // rolling towards it would spin forever. Snap to it instead.
+    const toIndex = set.indexOf(toLetter);
+    if (toIndex === -1 || prefersReducedMotion.matches) {
+      settle();
+      return;
+    }
+
+    // Start close enough to the target that the roll stays bounded.
+    let startIndex = set.indexOf(fromLetter);
+    if (startIndex === -1 || (toIndex - startIndex + set.length) % set.length > MAX_FLIPS) {
+      startIndex = (toIndex - MAX_FLIPS + set.length) % set.length;
+      prevFlaps.text(set[startIndex]);
+    }
+
+    let next = cycle[set[startIndex]];
+    let steps = 0;
+
     flap.select('.front').on('animationiteration', function () {
-      if (next === toLetter) {
-        flap.classed('animated fast', false)
-          .selectAll('span')
-          .text(toLetter);
-        return cb();
+      if (next === toLetter || ++steps > MAX_FLIPS + 1) {
+        return settle();
       }
 
       flap.classed('fast', isFast);
 
       prevFlaps.text(next);
 
-      current = next;
       next = cycle[next];
 
       setTimeout(function () {
@@ -118,7 +146,7 @@ function createFlipFlapBoard(
   }
 
   return function updateFlipFlapBoard(newStringRows, newBlinkRows, isFast = false) {
-    for (i in [...Array(rowAmount).keys()]) {
+    for (let i = 0; i < rowAmount; i++) {
       stringRows[i] = newStringRows[i] ?? ''.padEnd(width)
       dotsList[i][0].classList.toggle('blink-1', newBlinkRows[i] ?? false)
       dotsList[i][1].classList.toggle('blink-2', newBlinkRows[i] ?? false)
