@@ -10,29 +10,24 @@ activeNav: home
 eleventyComputed:
   pageHref: "{{ pageLocale.href }}"
 ---
-  <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
-    <div class="hero-cover" style="height: 100%; background-image: url('assets/img/hero-bg.jpg'); background-size: cover; background-position: center;">
-      <div style="position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; transform: translate(-50%, -50%);">
-        <iframe
-                width="100%"
-                height="100%"
-                src="{{ site.heroVideoEmbedUrl | safe }}"
-                frameborder="0"
-                loading="lazy"
-                allow="autoplay; encrypted-media"
-                allowfullscreen
-                style="pointer-events: none;"
-        ></iframe>
-      </div>
+    <div class="hero-cover">
+      <iframe
+        src="{{ site.heroVideoEmbedUrl | safe }}"
+        title="{{ t.hero.title }}"
+        loading="eager"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen
+      ></iframe>
       <div class="mask"></div>
     </div>
-    <div class="container">
+    <div class="container hero-content">
+      <p class="hero-kicker">China Airlines Virtual</p>
       <h1>{{ t.hero.title }}</h1>
       <h2>{{ t.hero.subtitle }}</h2>
-      <a href="{{ site.discordUrl }}" class="btn-get-started scrollto">{{ t.hero.cta }}</a>
+      <a href="{{ site.discordUrl }}" class="btn-get-started" target="_blank" rel="noopener">{{ t.hero.cta }}</a>
     </div>
-  </section><!-- End Hero -->
+  </section>
 
   <main id="main">
 
@@ -73,154 +68,58 @@ eleventyComputed:
       </div>
     </section><!-- End Why Us Section -->
 
-    <!-- ======= Counts Section ======= -->
-    <section id="counts" class="counts">
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-4 col-md-6">
-            <div class="count-box">
-              <i class="fas fa-user-md"></i>
-              <span id="purecounter-pilots">0</span>
-              <p>{{ t.counts.pilots }}</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 mt-5 mt-md-0">
-            <div class="count-box">
-              <i class="far fa-hospital"></i>
-              <span id="purecounter-legs"></span>
-              <p>{{ t.counts.legs }}</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 mt-5 mt-lg-0">
-            <div class="count-box">
-              <i class="fas fa-flask"></i>
-              <span id="purecounter-time"></span>
-              <p>{{ t.counts.hours }}</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Counts Section -->
 
     <!-- ======= About Section ======= -->
-    <section id="hiring" class="about">
-      <div class="container-fluid">
-
-        <div class="row">
-          <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch position-relative">
-            <a href="{{ site.introVideoUrl }}" class="glightbox play-btn mb-4"></a>
+    <section id="hiring" class="about feature-section">
+      <div class="container">
+        <div class="feature-shell">
+          <div class="feature-media">
+            <a href="{{ site.introVideoUrl }}" class="glightbox feature-play" aria-label="Play introduction"></a>
           </div>
 
-          <div
-            class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
+          <div class="feature-content">
+            <p class="feature-eyebrow">Community</p>
             <h3>{{ t.hiring.heading }}</h3>
-            <p>{{ t.hiring.intro }}</p>
-            {% for box in t.hiring.boxes %}
-            <div class="icon-box">
-              <a href="{% if box.link == 'discord' %}{{ site.discordUrl }}{% elif box.link == 'facebook' %}{{ site.facebookUrl }}{% else %}{{ site.instagramUrl }}{% endif %}" target="_blank">
-                <div class="icon"><i class="{{ box.icon }}"></i></div>
-                <h4 class="title">{{ box.title }}</h4>
+            <p class="feature-intro">{{ t.hiring.intro }}</p>
+            <div class="feature-grid">
+              {% for box in t.hiring.boxes %}
+              <a class="feature-card" href="{% if box.link == 'discord' %}{{ site.discordUrl }}{% elif box.link == 'facebook' %}{{ site.facebookUrl }}{% else %}{{ site.instagramUrl }}{% endif %}" target="_blank" rel="noopener">
+                <span class="feature-icon"><i class="{{ box.icon }}"></i></span>
+                <span>
+                  <h4>{{ box.title }}</h4>
+                  <p>{{ box.text }}</p>
+                </span>
+                <i class="bx bx-right-arrow-alt feature-arrow"></i>
               </a>
-              <p class="description">{{ box.text }}</p>
+              {% endfor %}
             </div>
-            {% endfor %}
           </div>
         </div>
 
-        <div class="row">
-
-          <div
-            class="col-xl-6 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
+        <div class="dispatch-block">
+          <div class="dispatch-heading">
+            <p class="feature-eyebrow">Operations</p>
             <h3>{{ t.dispatch.heading }}</h3>
             <p>{{ t.dispatch.intro }}</p>
+          </div>
+          <div class="dispatch-layout">
+            <div class="dispatch-grid">
             {% for box in t.dispatch.boxes %}
-            <div class="icon-box" style="margin-top: 15px">
-              <div class="icon"><i class="{{ box.icon }}"></i></div>
-              <h4 class="title">{{ box.title }}</h4>
-              <p class="description">{{ box.text }}</p>
-            </div>
+            <article class="dispatch-card">
+              <span class="feature-icon"><i class="{{ box.icon }}"></i></span>
+              <h4>{{ box.title }}</h4>
+              <p>{{ box.text }}</p>
+            </article>
             {% endfor %}
-          </div>
-          <div class="col-xl-6 col-lg-6 d-flex justify-content-center align-items-stretch position-relative">
-            <img src="assets/img/dispatch-intro.jpg" class="glightbox mb-4" loading="lazy" decoding="async" style="width: 100%; object-fit: contain;" />
-          </div>
-        </div>
-      </div>
-    </section><!-- End About Section -->
-
-    <!-- ======= Departments Section ======= -->
-    <section id="statistics" class="departments">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>{{ t.statistics.heading }}</h2>
-        </div>
-
-        <div class="row gy-4">
-          <div class="col-lg-2">
-            <ul class="nav nav-tabs flex-column">
-              {%- for tab in site.statisticsTabs %}
-              <li class="nav-item">
-                <a class="nav-link{% if loop.first %} active show{% endif %}" data-bs-toggle="tab" href="#{{ tab.id }}">{{ t.statistics.tabs[tab.key] }}</a>
-              </li>
-              {%- endfor %}
-            </ul>
-          </div>
-          <div class="col-lg-4">
-            <div class="tab-content">
-              {%- for tab in site.statisticsTabs %}
-              <div class="tab-pane{% if loop.first %} active show{% endif %}" id="{{ tab.id }}">
-                <div class="row gy-4">
-                  <div id="{{ tab.target }}" class="col-lg-8 details order-2 order-lg-1">
-                    <h3>{{ t.statistics.tabs[tab.key] }}</h3>
-                  </div>
-                </div>
-              </div>
-              {%- endfor %}
+            </div>
+            <div class="dispatch-media">
+              <img src="assets/img/dispatch-intro.jpg" alt="{{ t.dispatch.heading }}" loading="lazy" decoding="async">
             </div>
           </div>
-          <div class="col-lg-6">
-            {%- set latest = flightData.latest %}
-            {%- if latest %}
-            <h3>{{ latest.date | slashDate }} {{ t.flightHistory.recordSuffix }} <a href="flight-history-{{ latest.id }}.html" style="font-size: 0.5em">{{ t.flightHistory.openLarger }}</a></h3>
-            <div id="map-replay" style="min-height: 200px" data-timeline="{{ latest.timeline }}" data-lat="{{ latest.map.lat }}" data-lon="{{ latest.map.lon }}" data-zoom="{{ latest.map.zoom }}"></div>
-            {%- endif %}
-          </div>
         </div>
       </div>
+    </section>
 
-      <div class="row" style="margin-top: 80px">
-        <div class="col-xl-7 col-lg-6 col-md-5 mt-12 mt-md-0">
-          <div id="live-map" style="min-height: 250px"></div>
-        </div>
-        <div class="col-xl-5 col-lg-6 col-md-7 mt-12 mt-md-0">
-          <div class="flip-flap-board">
-            <div id="flip-flap-header">{{ site.flipFlap.header }}</div>
-            <div id="flip-flap"></div>
-            <div class="flip-flap-board-footer">{{ site.flipFlap.footer | safe }}</div>
-          </div>
-        </div>
-      </div>
-    </section><!-- End Departments Section -->
-
-    <!-- ======= Members Section ======= -->
-    <section id="members" class="members">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>{{ t.members.heading }}</h2>
-        </div>
-
-        <div id="member-list" class="row"></div>
-
-      </div>
-    </section><!-- End Members Section -->
 
     <!-- ======= Frequently Asked Questions Section ======= -->
     <section id="faq" class="faq section-bg">
@@ -252,28 +151,28 @@ eleventyComputed:
     </section><!-- End Frequently Asked Questions Section -->
 
     <!-- ======= Partners Section ======= -->
-    <section id="partners" class="services">
+    <section id="partners" class="partners-section">
       <div class="container">
-
-        <div class="section-title">
+        <div class="partners-heading">
+          <p class="feature-eyebrow">Network</p>
           <h2>{{ t.partners.heading }}</h2>
         </div>
 
-        <div class="row">
+        <div class="partner-wall">
           {%- for partner in site.partners %}
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch{% if partner.mt %} {{ partner.mt }}{% endif %}">
-            <a class="icon-box" href="{{ partner.href }}" target="_blank">
-              <div>
-                <img src="{{ partner.img }}" width="160" loading="lazy" decoding="async" />
-              </div>
-              <p>{{ t.partners.items[partner.key] }}</p>
-            </a>
-          </div>
+          <a class="partner-brand" href="{{ partner.href }}" target="_blank" rel="noopener">
+            <span class="partner-logo">
+              <img src="{{ partner.img }}" alt="{{ partner.key }}" loading="lazy" decoding="async">
+            </span>
+            <span class="partner-info">
+              <span>{{ t.partners.items[partner.key] }}</span>
+              <i class="bx bx-right-arrow-alt"></i>
+            </span>
+          </a>
           {%- endfor %}
         </div>
-
       </div>
-    </section><!-- End Partners Section -->
+    </section>
 
 {% include "partials/privacy.njk" %}
 

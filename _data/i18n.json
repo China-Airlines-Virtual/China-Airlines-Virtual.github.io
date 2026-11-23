@@ -43,7 +43,7 @@
       "intro": "無論是菜鳥、資深機師、專業航管，我們都非常歡迎您的加入",
       "boxes": [
         { "link": "discord", "icon": "bx bxl-discord", "title": "加入 Discord", "text": "每天都有成員們在線上飛行、學習、討論" },
-        { "link": "facebook", "icon": "bx bxl-facebook", "title": "加入 Facebook 社團", "text": "社團內有設百位成員與你一起分享飛行時的快樂" },
+        { "link": "facebook", "icon": "bx bxl-facebook", "title": "加入 Facebook 社團", "text": "社團內已有數百位成員，與你一起分享飛行時的快樂" },
         { "link": "instagram", "icon": "bx bxl-instagram", "title": "追蹤 Instagram", "text": "不定時分享活動資訊及照片" }
       ]
     },
@@ -95,11 +95,11 @@
         },
         {
           "question": "有薪水嗎？",
-          "answerHtml": "當然不會有薪水拉😂，但會不定時發送禮物，年末會舉辦抽獎活動慰勞各位"
+          "answerHtml": "當然不會有薪水😂，但會不定期發送禮物；年末也會舉辦抽獎活動慰勞各位。"
         },
         {
           "question": "我飛不好會不會被罵？",
-          "answerHtml": "不會<del>，但可能會被笑</del>，我們是一個友善的社群，歡迎任何人加入，不論您是新手或老手，我們都會以最大的熱情歡迎您的加入。"
+          "answerHtml": "不會，但可能會被大家笑一下；我們是一個友善的社群，歡迎任何人加入，不論您是新手或老手，都會受到熱情歡迎。"
         }
       ]
     },
@@ -116,13 +116,13 @@
     "privacy": {
       "heading": "隱私權政策",
       "subheading": "資料蒐集",
-      "intro": "我們將基於虛擬航空公司對飛行員的角度蒐集以下資料:",
+      "intro": "我們基於虛擬航空公司對飛行員資料管理的目的，蒐集以下資料：",
       "items": [
         "您的暱稱, 您的英文名縮寫, IVAO VID, VATSIM CID",
         "您飛行的相關紀錄，僅限於當時飛行的呼號及飛行數據"
       ],
       "paragraphs": [
-        "我們將保留這些資料並顯示於我們網站上並作為活動宣傳使用。"
+        "我們將保留這些資料，並可能將其顯示於網站上或用於活動宣傳。"
       ],
       "contactBefore": "若您對隱私權政策有任何疑問或要求刪除資料，請隨時透過信箱",
       "contactAfter": "與我們聯繫。"
@@ -258,7 +258,7 @@
         "The collected data will be retained and displayed on our official website. This information is used for operational tracking and promotional purposes (such as event highlights and community showcases).",
         "Your GDPR Rights: You can request to access, correct, or delete your data, and withdraw your consent at any time."
       ],
-      "contactBefore": "If you have any questions regarding our Privacy Policy or wish to delete you data, please contact us via email at: ",
+      "contactBefore": "If you have any questions regarding our Privacy Policy or wish to delete your data, please contact us via email at: ",
       "contactAfter": ""
     },
     "footer": {
